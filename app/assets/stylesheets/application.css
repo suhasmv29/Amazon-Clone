@@ -13,3 +13,172 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+}
+
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    
+    font-size: 36px;
+    
+}
+/* 
+< !-- Search container --> */
+.search-container {
+    float: none;
+}
+
+.search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+}
+
+.search-container button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+/* < !-- Search container ends here -->< !-- sign in dropdown --> */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* < !-- sign-in drop down ends here --> */
+
+/* Nav body starts here */
+.nav-body{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+.location{
+    
+}
+
+.search{
+    width:50%;
+}
+
+
+
+
+
+
+/* Mobile view starts here */
+@media screen and (max-width: 360px) {
+    .sidenav {
+      
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+    .location{
+        display: none;
+    }
+    .search{
+        display:flex;
+        width: 95%;
+        order:3;
+        height: 50px;
+        
+    }
+
+
+    .dropdown{
+        display: none;
+    }
+    .return{
+        display: none;
+    }
+    .amz-icon{
+        
+        width:50%;
+    }
+    
+    .cart{
+        width: 50%;
+        position: relative;
+        left: 120px;
+    }
+    .nav-body{
+        display:flex;
+        flex-wrap: wrap;
+    }
+
+    .amz-icon .amz_p{
+        font-size: 10px;
+    }
+    .cn{
+        display: none;
+    }
+    .web-nav{
+        padding: 10px;
+    }
+
+
+
+}
+
+

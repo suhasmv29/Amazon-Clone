@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # get 'store/index'
+  root 'store#index', as: 'store_index'
   resources :products
   resources :categories
   # devise_for :admins

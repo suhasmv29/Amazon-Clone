@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div style="background-color:#000015;" class="web-nav">
+        <div id="mySidenav" class="sidenav">
+         
+            <div style="display:flex;background-color:#0F1111;color:white;top:0px;height:100px;align-items:center;">
+
+                <div style="margin:5px;"><i style="font-size:22px" class="fa">&#xf2be;Hello, Sign in</i></div>
+                <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a></div>
+
+            </div>
+          
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a>
+        </div>
+
+
+        <div class="nav-body">
+            <span style="font-size:30px;cursor:pointer;display:flex;" onclick="openNav()" class="amz-icon">
+                <p class="amz_p"style="color:white;font-size: 26px;">&#9776;</p> <img src="https://pngimg.com/uploads/amazon/amazon_PNG25.png" class="ama_i" alt="" style="width: 150px;height:70px;margin-top:15px;">
+            </span>
+
+            <div class="location">
+                <button style='font-size:24px;background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;'> <i class='fas fa-map-marker-alt'>Location</i></button>
+            </div>
+
+            <form action="/action_page.php" class="search">
+                <input type="text" placeholder="Search.." name="search" style="width:80%;height:40px;" class="search-1">
+                <button type="submit" style="background-color: orange;height:40px;border-radius:3px;"><i class="fa fa-search"></i></button>
+            </form>
+
+            <div class="dropdown" style="color:white">
+
+                <span>
+                    <p>Hello, Sign in</p>
+                    <p><b>Account & Lists</b></p>
+                </span>
+                <div class="dropdown-content" style="color:black;">
+                    <div class="">
+                        <%= link_to  "Sign In", new_user_session_path%>
+
+                        <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
+                    </div>
+                    <div class="" style="display:flex;">
+                        <div class="">
+                            <h2>Your Lists</h2>
+                            <a href="#">Wish List</a>
+                        </div>
+                        <div class="">
+                            <h2>Your Account</h2>
+                            <p><a href="#">Your Accounts</a></p>
+                            <p><a href="#">Your Orders</a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="return" style="background-color:transperant;">
+                <button type="button" name="button" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;">
+                    <p>Returns</p>
+                    <p><b>& Orders</b></p>
+                </button>
+            </div>
+            <div class="cart">
+                <i class="fa fa-shopping-cart" style="font-size:36px;color:white;"><span style="font-size:25px;" class="cn">cart</span></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+</body>
+
+</html>

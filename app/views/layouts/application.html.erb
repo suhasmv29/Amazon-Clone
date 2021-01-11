@@ -10,9 +10,12 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render  "layouts/nav" %>
+    <main class='<%= controller.controller_name %>'>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
 
-    <%= yield %>
+      <%= yield %>
+    </main>
   </body>
 </html>
