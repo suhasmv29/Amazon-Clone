@@ -20,10 +20,11 @@
 
             </div>
           
-            <a href="#">About</a>
+            <%= link_to  "Abouts", root_path%>
             <a href="#">Services</a>
             <a href="#">Clients</a>
             <a href="#">Contact</a>
+            
         </div>
 
 
@@ -44,14 +45,26 @@
             <div class="dropdown" style="color:white">
 
                 <span>
-                    <p>Hello, Sign in</p>
-                    <p><b>Account & Lists</b></p>
+                    <%if current_user.present?%>
+
+                        <p>Hello, <%= current_user.email%></p>
+                        <p><b>Account & Lists</b></p>
+                    <%else%>
+                        <p>Hello, Sign in</p>
+                        <p><b>Account & Lists</b></p>
+                    <%end%>
                 </span>
+                
                 <div class="dropdown-content" style="color:black;">
                     <div class="">
-                        <%= link_to  "Sign In", new_user_session_path%>
+                        <% if !current_user.present?%>
+                            <%= link_to  "Sign In", new_user_session_path%>
 
-                        <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
+                            <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
+                        <%else%>
+                            <%= link_to  "Sign out", destroy_user_session_path, method: :delete %>
+                        <%end%>
+
                     </div>
                     <div class="" style="display:flex;">
                         <div class="">
@@ -66,6 +79,7 @@
                     </div>
 
                 </div>
+                
             </div>
             <div class="return" style="background-color:transperant;">
                 <button type="button" name="button" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;">
@@ -74,8 +88,6 @@
                 </button>
             </div>
             <div class="cart">
-                <i class="fa fa-shopping-cart" style="font-size:36px;color:white;"><span style="font-size:25px;" class="cn">cart</span></i>
-
             </div>
 
         </div>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  resources :line_items
+  resources :carts
   # get 'store/index'
-  root 'store#index', as: 'store_index'
+  root 'store#index'
   resources :products
   resources :categories
   # devise_for :admins
@@ -9,7 +11,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
   }
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',

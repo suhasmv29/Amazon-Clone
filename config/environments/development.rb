@@ -54,8 +54,12 @@ Rails.application.configure do
   config.assets.quiet = true
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  if Rails.root.join('tmp/caching-dev.txt').exist?
+    config.action_controller.enable_fragment_cache_logging = true
+    config.action_controller.perform_caching = true
+    config.cache_store = :memory_store
 
-
+  end
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
