@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root 'home#index' 
   resources :orders
   resources :line_items
   resources :carts
   # get 'store/index'
-  get 'store/index'
+  get 'store/index', as: 'store_index'
   
   # resources :products
   resources :categories

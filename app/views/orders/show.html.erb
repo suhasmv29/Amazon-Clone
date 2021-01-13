@@ -1,9 +1,24 @@
-<p id="notice"><%= notice %></p>
 <% @order.each do |order| %>
+  <%
+=begin%>
+ <%=order.id%><br>
+  
+<%@cart.each do |cart|%>
+    <% e = cart.line_items%>
+    <%e.each do |w|%>
+    <%= w.product.title%>
+    <%end%>
+<%end%> 
+<%
+=end%>
+  
+
 <div>
 <p>
   <strong>Name:</strong>
-  <%= order.name %>
+  
+  <%= order.name %><br>
+  <strong>Products title: </strong>
 </p>
 
 <p>
@@ -21,7 +36,5 @@
   <%= order.pay_type %>
 </p>
 
-<%= link_to 'Edit', edit_order_path(order) %> |
-<%= link_to 'Back', orders_path %>
 </div>
 <% end %>

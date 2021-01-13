@@ -14,6 +14,9 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @order = Order.where(user_id: current_user.id)
+    # @cart = Cart.where(user_id: current_user.id)
+    # @cart = Cart.find(@order.cart_id)
+    # @line = LineItem.where(cart_id: @cart.ids)
   end
 
   # GET /orders/new
@@ -29,6 +32,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items_from_cart(@cart)
+    
     @order.user_id = current_user.id
 
     respond_to do |format|
@@ -36,7 +40,7 @@ class OrdersController < ApplicationController
         @cart = session[:cart_id]
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        format.html { redirect_to root_path, notice: 'Order was successfully created.' }
+        format.html { redirect_to store_index_url, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
@@ -82,7 +86,7 @@ class OrdersController < ApplicationController
   end
 
   def ensure_cart_isnt_empty
-    redirect_to root_path, notice: 'Your cart is empty' if @cart.line_items.empty?
+    redirect_to store_index_url, notice: 'Your cart is empty' if @cart.line_items.empty?
   end
   def check
     if current_user.present?

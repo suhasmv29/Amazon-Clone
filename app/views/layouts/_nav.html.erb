@@ -12,30 +12,30 @@
 <body>
     <div style="background-color:#000015;" class="web-nav">
         <div id="mySidenav" class="sidenav">
-         
+
             <div style="display:flex;background-color:#0F1111;color:white;top:0px;height:100px;align-items:center;">
 
                 <div style="margin:5px;"><i style="font-size:22px" class="fa">&#xf2be;Hello,<%if current_user.present?%>
-                 <%=current_user.email%>
-                 <%else%>
-                 <%= link_to "Sign_in",user_session_path,style:"color:white;text-decoration: none;"%>
-                 <%end%>
-                 </i></div>
+                        <%=current_user.email%>
+                        <%else%>
+                        <%= link_to "Sign_in",user_session_path,style:"color:white;text-decoration: none;"%>
+                        <%end%>
+                    </i></div>
                 <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a></div>
 
             </div>
-          
+
             <%= link_to  "Abouts", root_path%>
             <a href="#">Services</a>
             <a href="#">Clients</a>
             <a href="#">Contact</a>
-            
+
         </div>
 
 
         <div class="nav-body">
             <span style="font-size:30px;cursor:pointer;display:flex;" onclick="openNav()" class="amz-icon">
-                <p class="amz_p"style="color:white;font-size: 26px;">&#9776;</p> <img src="https://pngimg.com/uploads/amazon/amazon_PNG25.png" class="ama_i" alt="" style="width: 150px;height:70px;margin-top:15px;">
+                <p class="amz_p" style="color:white;font-size: 30px;">&#9776;</p> <img src="https://pngimg.com/uploads/amazon/amazon_PNG25.png" class="ama_i" alt="" style="width: 150px;height:100px;margin-top:15px;">
             </span>
 
             <div class="location">
@@ -52,22 +52,22 @@
                 <span>
                     <%if current_user.present?%>
 
-                        <p>Hello, <%= current_user.email%></p>
-                        <p><b>Account & Lists</b></p>
+                    <p>Hello, <%= current_user.email%></p>
+                    <p><b>Account & Lists</b></p>
                     <%else%>
-                        <p>Hello, Sign in</p>
-                        <p><b>Account & Lists</b></p>
+                    <p>Hello, Sign in</p>
+                    <p><b>Account & Lists</b></p>
                     <%end%>
                 </span>
-                
+
                 <div class="dropdown-content" style="color:black;">
                     <div class="">
                         <% if !current_user.present?%>
-                            <%= link_to  "Sign In", new_user_session_path%>
+                        <%= link_to  "Sign In", new_user_session_path%>
 
-                            <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
+                        <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
                         <%else%>
-                            <%= link_to  "Sign out", destroy_user_session_path, method: :delete %>
+                        <%= link_to  "Sign out", destroy_user_session_path, method: :delete %>
                         <%end%>
 
                     </div>
@@ -84,23 +84,14 @@
                     </div>
 
                 </div>
-                
+
             </div>
             <div class="return" style="background-color:transperant;">
-                <button type="button" name="button" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;">
-                    <%if current_user.present?%>
-                        <%if @order.nil?%>
-                            <p><%= link_to  "Returns",order_path(@order.last.id), style: "color:white;text-decoration: none;"%></p>
-                            <p><b><%= link_to  "& Orders",order_path(@order.last.id), style: "color:white;text-decoration: none;"%></b></p>
-                        <%end%>
-                    <%end%>
-                </button>
+               
             </div>
             <% if current_user.present?%>
             <div class="cart">
-                <%if !@cart.nil?%>
-                    <%= link_to  "cart", cart_path(@cart.id),class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
-                <%end%>
+                
             </div>
             <%else%>
             <div class="cart">
