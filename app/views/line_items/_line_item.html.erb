@@ -1,5 +1,5 @@
 <tr>
-    <td><%= link_to  image_tag(line_item.product.image_url), root_path %></td>
+    <td><%= link_to  image_tag(line_item.product.image_url), root_path,class: 'image' %></td>
 
     <td class="quantity"><%= line_item.quantity %></td>
     <td><%= line_item.product.title %></td>

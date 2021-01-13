@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: %i[show edit update destroy]
 
   # GET /products
   # GET /products.json
@@ -9,25 +9,23 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   # GET /products/1.json
-  def show
-  end
+  def show; end
 
   # GET /products/new
   def new
     @product = Product.new
-    
-    @categories = Category.all.map{|c| [ c.name, c.id ] }
+
+    @categories = Category.all.map { |c| [c.name, c.id] }
   end
 
   # GET /products/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /products
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    @product. category_id =1
+    @product.category_id = 1
 
     respond_to do |format|
       if @product.save
@@ -64,14 +62,25 @@ class ProductsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
+  def who_bought
+    @product = Product.find(params[:id])
+    @latest_order = @product.orders.order(:updated_at).last
+    if stale?(@latest_order)
+      respond_to do |format|
+        format.atom
+      end
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.require(:product).permit(:title, :description, :image_url, :price, :category_id)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def product_params
+    params.require(:product).permit(:title, :description, :image_url, :price, :category_id)
+  end
 end

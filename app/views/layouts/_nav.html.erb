@@ -83,12 +83,23 @@
             </div>
             <div class="return" style="background-color:transperant;">
                 <button type="button" name="button" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;">
-                    <p>Returns</p>
-                    <p><b>& Orders</b></p>
+                    <p><%= link_to  "Returns",order_path(@order.id.last), style: "color:white;text-decoration: none;"%></p>
+                    <p><b><%= link_to  "& Orders",order_path(@order.id.last), style: "color:white;text-decoration: none;"%></b></p>
                 </button>
             </div>
+            <% if current_user.present?%>
             <div class="cart">
+                <%if !@cart.nil?%>
+                    <%= link_to  "cart", cart_path(@cart.id),class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
+                <%end%>
             </div>
+            <%else%>
+            <div class="cart">
+                <%= link_to  "cart", new_user_session_path,class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
+            </div>
+            <%end%>
+
+
 
         </div>
 

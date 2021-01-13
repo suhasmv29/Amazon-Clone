@@ -11,6 +11,8 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
+    @c = Cart.where("user_id = :user_id", { user_id: current_user.id})
+    session[:id] = @cart
   end
 
   # GET /carts/new
@@ -25,8 +27,13 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
+    # if @cart.user_ids.include(current_user.id)
+    #   binding.pry
+    #   # redirect_to @cart(Cart.select(:id).where("user_id = :user_id", { user_id:  current_user.id }))
+    #   redirect_to root_path
+    # else
     @cart = Cart.new(cart_params)
-
+    
     respond_to do |format|
       if @cart.save
         format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
@@ -36,6 +43,7 @@ class CartsController < ApplicationController
         format.json { render json: @cart.errors, status: :unprocessable_entity }
       end
     end
+    # end
   end
 
   # PATCH/PUT /carts/1

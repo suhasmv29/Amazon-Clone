@@ -2,7 +2,6 @@ class LineItemsController < ApplicationController
   include CurrentCart
   before_action :set_cart,only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
 
   # GET /line_items
   # GET /line_items.json
@@ -30,10 +29,12 @@ class LineItemsController < ApplicationController
     product = Product.find(params[:product_id])
     # @line_item = LineItem.new(line_item_params)
     @line_item = @cart.add_product(product)
-    
+    @cart.user_id = current_user.id
+    @cart.save
     respond_to do |format|
       if @line_item.save
         format.html { redirect_to root_path, notice: 'Line item was successfully created.' }
+        format.js {@current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -70,10 +71,6 @@ class LineItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_line_item
       @line_item = LineItem.find(params[:id])
-      li = LineItem.find(params[:id])
-      puts "This item is for #{li.product.title}"
-      
-      
     end
 
     # Only allow a list of trusted parameters through.

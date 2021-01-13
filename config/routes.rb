@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  resources :orders
   resources :line_items
   resources :carts
   # get 'store/index'
   root 'store#index'
-  resources :products
+  # resources :products
   resources :categories
   # devise_for :admins
   # devise_for :sellers
@@ -11,7 +12,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
-    registrations: 'users/registrations',
+    registrations: 'users/registrations'
   }
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
@@ -23,5 +24,8 @@ Rails.application.routes.draw do
     passwords: 'sellers/passwords',
     registrations: 'sellers/registrations'
   }
+  resources :products do
+    get :who_bought, on: :member
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

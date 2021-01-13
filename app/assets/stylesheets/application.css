@@ -169,9 +169,9 @@ body {
     }
     
     .cart{
-        width: 50%;
+        width: 50px;
         position: relative;
-        left: 120px;
+        left: 10px;
     }
     .nav-body{
         display:flex;
@@ -186,6 +186,10 @@ body {
     }
     .web-nav{
         padding: 10px;
+    }
+    body{
+        /* width: 330px; */
+        width: auto;
     }
 
 
