@@ -1,6 +1,8 @@
 class Order < ApplicationRecord
   validates :name, :address, :email, presence: true
   has_many :line_items, dependent: :destroy
+  has_many :users
+  
 
   enum pay_type: {
     'Debit card' => 0,

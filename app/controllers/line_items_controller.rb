@@ -7,6 +7,7 @@ class LineItemsController < ApplicationController
   # GET /line_items.json
   def index
     @line_items = LineItem.all
+
   end
 
   # GET /line_items/1
@@ -27,6 +28,7 @@ class LineItemsController < ApplicationController
   # POST /line_items.json
   def create
     product = Product.find(params[:product_id])
+
     # @line_item = LineItem.new(line_item_params)
     @line_item = @cart.add_product(product)
     @cart.user_id = current_user.id

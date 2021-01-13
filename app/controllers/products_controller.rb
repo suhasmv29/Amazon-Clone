@@ -9,7 +9,12 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   # GET /products/1.json
-  def show; end
+  def show
+    if current_user.present?
+      @order = Order.where(user_id: current_user.id)
+    end
+
+  end
 
   # GET /products/new
   def new

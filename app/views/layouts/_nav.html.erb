@@ -15,7 +15,12 @@
          
             <div style="display:flex;background-color:#0F1111;color:white;top:0px;height:100px;align-items:center;">
 
-                <div style="margin:5px;"><i style="font-size:22px" class="fa">&#xf2be;Hello, Sign in</i></div>
+                <div style="margin:5px;"><i style="font-size:22px" class="fa">&#xf2be;Hello,<%if current_user.present?%>
+                 <%=current_user.email%>
+                 <%else%>
+                 <%= link_to "Sign_in",user_session_path,style:"color:white;text-decoration: none;"%>
+                 <%end%>
+                 </i></div>
                 <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a></div>
 
             </div>
@@ -83,8 +88,12 @@
             </div>
             <div class="return" style="background-color:transperant;">
                 <button type="button" name="button" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;">
-                    <p><%= link_to  "Returns",order_path(@order.id.last), style: "color:white;text-decoration: none;"%></p>
-                    <p><b><%= link_to  "& Orders",order_path(@order.id.last), style: "color:white;text-decoration: none;"%></b></p>
+                    <%if current_user.present?%>
+                        <%if @order.nil?%>
+                            <p><%= link_to  "Returns",order_path(@order.last.id), style: "color:white;text-decoration: none;"%></p>
+                            <p><b><%= link_to  "& Orders",order_path(@order.last.id), style: "color:white;text-decoration: none;"%></b></p>
+                        <%end%>
+                    <%end%>
                 </button>
             </div>
             <% if current_user.present?%>

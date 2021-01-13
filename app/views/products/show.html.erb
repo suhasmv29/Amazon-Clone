@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Image url:</strong>
+  <%= image_tag(@product.image_url)%>
+</p>
 
 <p>
   <strong>Title:</strong>
@@ -10,10 +14,7 @@
   <%= @product.description %>
 </p>
 
-<p>
-  <strong>Image url:</strong>
-  <%= @product.image_url %>
-</p>
+
 
 <p>
   <strong>Price:</strong>
@@ -24,6 +25,10 @@
   <strong>Category:</strong>
   <%= @product.category_id %>
 </p>
+<%if current_user.present?%>
+<%= button_to 'Add to Cart', line_items_path(product_id: @product.id) %>
+<%else%>
+  <%= button_to 'Add to Cart', user_session_path %>
+                    
+<%end%>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>

@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  root 'home#index'
   resources :orders
   resources :line_items
   resources :carts
   # get 'store/index'
-  root 'store#index'
+  get 'store/index'
+  
   # resources :products
   resources :categories
   # devise_for :admins

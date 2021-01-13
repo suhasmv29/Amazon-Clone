@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: %i[new create]
-
   before_action :ensure_cart_isnt_empty, only: :new
   before_action :set_order, only: %i[show edit update destroy]
 
@@ -14,6 +13,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @order = Order.where(user_id: current_user.id)
   end
 
   # GET /orders/new
@@ -29,6 +29,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items_from_cart(@cart)
+    @order.user_id = current_user.id
 
     respond_to do |format|
       if @order.save
@@ -82,6 +83,11 @@ class OrdersController < ApplicationController
 
   def ensure_cart_isnt_empty
     redirect_to root_path, notice: 'Your cart is empty' if @cart.line_items.empty?
+  end
+  def check
+    if current_user.present?
+      @order = Order.where(user_id: current_user.id)
+    end
   end
 
 end

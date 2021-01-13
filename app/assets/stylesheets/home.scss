@@ -1,0 +1,202 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0; background-color:lightgrey }
+.mySlides {display: none;}
+img {vertical-align: middle;height: 300px;}
+
+/* Slideshow container */
+.slideshow-container {
+  height:300px;
+  position: relative;
+  margin: auto;
+  box-sizing: none;
+  align-self: center;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+.categories_adds{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: lightgray;
+
+  .categories_adds_1{
+    background-color: white;
+    align-items: center;
+    width:350px;
+    height:450px;
+    display:flex;
+    flex-direction: column;
+
+    align-content: space-around;
+    margin: 10px;
+  }
+  p{
+    width:120px;
+    font-size: 10px;
+  }
+  .categories_adds_1_internal{
+
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  img{
+    height:120px;
+    width:120px;
+  }
+  h2{
+    padding-left: 20px;
+    padding-right: 20px;
+    height:40px;
+    font-size: 18px;
+  }
+}
+.menu-wrapper {
+	position: relative;
+	max-width: 500px;
+	height: 100px; // hide the scroll bar
+	margin: 1em auto;
+	border: 1px solid black;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+.menu	{
+	height: 120px; // hide the scroll bar
+	background: #f3f3f3;
+	box-sizing: border-box;
+
+	white-space: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+
+	.item {
+		display: inline-block;
+		width: 100px;
+		height: 100%;
+		outline: 1px dotted gray;
+		padding: 1em;
+		box-sizing: border-box;
+	}
+}
+
+.paddles {
+}
+.paddle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 3em;
+}
+.left-paddle {
+	left: 0;
+}
+.right-paddle {
+	right: 0;
+}
+.hidden {
+	display: none;
+}
+
+.print {
+	margin: auto;
+	max-width: 500px;
+
+	span {
+		display: inline-block;
+		width: 100px;
+	}
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 360px) {
+
+  .prev, .next,.text {font-size: 11px}
+
+}

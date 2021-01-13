@@ -11,8 +11,7 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
-    @c = Cart.where("user_id = :user_id", { user_id: current_user.id})
-    session[:id] = @cart
+    @order = Order.where(user_id: current_user.id)
   end
 
   # GET /carts/new
