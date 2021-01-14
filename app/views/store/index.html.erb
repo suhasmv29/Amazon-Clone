@@ -8,7 +8,7 @@
         <li>
             <%= link_to image_tag(product.image_url), product_url(product),class: 'image' %>
             
-            <h2><%= product.title %></h2>
+            <h2><%= link_to product.title,product_url(product), style:'text-decoration: none;color: black;' %></h2>
             <p>
                 <%= sanitize(product.description) %>
             </p>
@@ -23,5 +23,6 @@
         </li>
         <% end %>
     </ul>
+
 </div>
 

@@ -2,7 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 .store {
-    max-width: 80em;
+    width:80%;
+    position: relative;
+    left: 10%;
+    // max-width: 80em;
     ul.catalog {
     border-top: solid 0.250em;
     list-style: none;
@@ -21,7 +24,7 @@
     }
     img {
     float: left;
-    width: 200px;
+    width: 320px;
     padding: 1em;
     margin-right: 1em;
     margin-bottom: 1em;
@@ -47,10 +50,20 @@
 }
     }
 }
+.container{
+    background-color: white;
+    padding: 25px;  
+}
 
 /* Mobile view starts here */
 @media screen and (max-width: 360px) {
 .container{
     float: left;
+    padding: 0px; 
+}
+.store{
+    position: relative;
+    left: 0%;
+    width: auto;
 }
 }

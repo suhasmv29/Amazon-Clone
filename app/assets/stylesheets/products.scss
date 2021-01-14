@@ -31,7 +31,7 @@
     // is a non-mobile device and can
     
     // fit the image.
-    
+}
     @media (min-width: 30em) {
     
     display: block;
@@ -43,7 +43,7 @@
     }
     
     }
-}
+
 td.description {
     h1 {
     font-size: 1.4em;
@@ -62,5 +62,50 @@ td.description {
     td {
     padding: 0.5em 0;
     }
+    }
+}
+
+.product_discription{
+    display:flex;
+    width:80%;
+    img{
+        width:500px;
+        height:720px;
+    }
+    h1{
+        font-size:36px;
+        line-height: 40px
+    }
+    h4{
+        font-size:24px;
+        
+        line-height: 32px;
+    }
+    .button{
+        background-color: #f8ca68;
+        border-radius: 12px;
+        height: 50px;
+        width: 300px;
+    }
+}
+
+@media (max-width:360px){
+    .product_discription{
+        display:flex;
+        flex-wrap: wrap;
+        width:auto;
+        
+        img{
+            width:320px;
+            height:400px;
+        }
+        h1{
+            font-size:26px;
+            line-height: 30px
+        }
+        h4{
+            font-size:16px;
+            line-height: 20px;
+        }
     }
 }

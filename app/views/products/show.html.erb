@@ -1,34 +1,31 @@
+<div class="product_discription"style="margin:auto">
+    <div class="product_discription_image">
+        <p>
+            <%= image_tag(@product.image_url)%>
+        </p>
+    </div>
+    <div>
+        <h1 style="">
+            Title:
+            <%= @product.title %>
+        </h1>
+        <h4>
+            Description:<br>
+            <i>
+            <%= @product.description %>
+            </i>
 
-<p>
-  <strong>Image url:</strong>
-  <%= image_tag(@product.image_url)%>
-</p>
+        </h4>
+        <p>
+            <strong>Price:</strong>
+            <%= @product.price %>
+        </p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @product.title %>
-</p>
+        <%if current_user.present?%>
+        <%= button_to 'Add to Cart', line_items_path(product_id: @product.id),class:'button' %>
+        <%else%>
+        <%= button_to 'Add to Cart', user_session_path %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
-
-
-
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @product.category_id %>
-</p>
-<%if current_user.present?%>
-<%= button_to 'Add to Cart', line_items_path(product_id: @product.id) %>
-<%else%>
-  <%= button_to 'Add to Cart', user_session_path %>
-                    
-<%end%>
-
+        <%end%>
+    </div>
+</div>

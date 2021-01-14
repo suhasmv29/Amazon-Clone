@@ -1,45 +1,46 @@
+
+<div class="order_body">
+<h1>Your Orders </h1>
+<div>
+    <p class="orders"><b>Order</b></p>
+</div>
 <% @order.each do |order| %>
 
-  <%@l = LineItem.where(order_id: order)%>
+<%@l = LineItem.where(order_id: order)%>
 
 <div>
-<strong>Order date:</strong>
-
-  <%= order.created_at.strftime("%e-%b-%Y")%>
-
-
-<p>
-  <strong>Address:</strong>
-  <%= order.address %>
-</p>
-
-
-<p>
-  <strong>Name:</strong>
-  <%= order.email %><br>
-  <strong>Order_id: <%= order.id %></strong>
-</p> 
-
-
-<p>
-  <strong>Product details:</strong>
-    <% @l.each do |quan|%>
-    <%= image_tag(quan.product.image_url)%>
-
-    <b><%= quan.product.title%></b>
-
-    <b>Quantity : <%=quan.quantity%></b>
-    <b>Price :<%= number_to_currency(quan.product.price)%></b>
-  <%end%>
-  <p>
-  <strong>Pay type:</strong>
-  <%= order.pay_type %>
-</p>
-</p>
+    <div class="product_details_main" style="border:1px solid grey;border-radius:5px;display:flex;justify-content:space-around;background-color:lightgrey;">
+        <p><strong>Order date:<br></strong><%= order.created_at.strftime("%e-%b-%Y")%></p>
+        <p><strong>Address:<br></strong><%= order.address %></p>
+        <p><strong>Name:<br></strong><%= order.email %><br></p>
+        <p><strong>Order_id:<br> <%= order.id %></strong></p>
+        <p><strong>Pay type:<br></strong><%= order.pay_type %></p>
+    </div>
 
 
 
 
 
+    <p>
+        <strong>Product details:</strong>
+        <% @l.each do |quan|%>
+    <div class="product_details">
+        <div class="order_image"><%=image_tag(quan.product.image_url)%></div>
+        <div class="" style="padding-left:10px;">
+            <div class="product_p"><b>Title:</b><%= quan.product.title%></div>
+            <div class="product_p"><b>Quantity : </b><%=quan.quantity%></div>
+            <div class="product_p"><b>Price :</b><%=number_to_currency(quan.product.price * quan.quantity)%></div>
+        </div>
+    </div>
+    <%end%>
+    <p>
 
-<% end %>
+    </p>
+    </p>
+</div>
+
+
+
+
+
+    <% end %>
