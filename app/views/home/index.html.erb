@@ -44,7 +44,9 @@
                     <p>Smart bulbs & string lights</p>
                 </div>
             </div>
-            <a href="#">See more</a>
+            <%= link_to "See more", store_index_url %>
+
+            
     
         </div>
         <div class="categories_adds_1">
@@ -95,8 +97,11 @@
             <div class="" style="background-color:white;height:40%;align-content:center;width:100%;">
                 <% if current_user.present?%>
                 <h2>Check your orders</h2>
+                <%if @order.exists?%>
                 <p style="text-align:center;width:100%"><b><%= link_to  "Returns & Orders",order_path(@order.last.id), style: "text-decoration: none;font-size:15px;"%></b></p>
-
+                <%else%>
+                    <h2 style="text-align:center;width:100%">No orders yet</h2>
+                <%end%>
                 
                 <%else%>
                 <h2>Sign in for your best experience</h2>

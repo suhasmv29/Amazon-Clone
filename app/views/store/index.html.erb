@@ -14,11 +14,10 @@
             </p>
             <div class="price">
                 <%= number_to_currency(product.price) %>
-                <%if current_user.present?%>
+                <%if user_signed_in?%>
                     <%= button_to 'Add to Cart', line_items_path(product_id: product), remote: true %>
                 <%else%>
-                    <%= button_to 'Add to Cart', user_session_path, method: :get, remote: true %>
-                    
+                    <%= button_to 'Add to Cart', user_session_path, method: :get%> 
                 <%end%>
             </div>
         </li>

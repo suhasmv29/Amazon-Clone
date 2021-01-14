@@ -87,11 +87,18 @@
 
             </div>
             <div class="return" style="background-color:transperant;">
-               
+
             </div>
             <% if current_user.present?%>
             <div class="cart">
-                
+                <%if @cart.present?%>
+                    <%= link_to  "cart", cart_path(@cart.id),class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
+                <% else%>
+                    <%= link_to "cart",carts_empty_cart_path,class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
+                <%end%>
+
+
+    
             </div>
             <%else%>
             <div class="cart">
