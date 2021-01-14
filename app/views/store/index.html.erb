@@ -1,4 +1,7 @@
+<div class="vl"></div>
 <div class="container">
+
+    
     <% if notice %>
     <aside id="notice"><%= notice %></aside>
     <% end %>
@@ -17,7 +20,11 @@
                 <%if user_signed_in?%>
                     <%= button_to 'Add to Cart', line_items_path(product_id: product), remote: true %>
                 <%else%>
+                    <%if seller_signed_in?%>
+                        <%= button_to 'Add to Cart',store_seller_path , method: :get%> 
+                    <%else%>
                     <%= button_to 'Add to Cart', user_session_path, method: :get%> 
+                    <%end%>
                 <%end%>
             </div>
         </li>

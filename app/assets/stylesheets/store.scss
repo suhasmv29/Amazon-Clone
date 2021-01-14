@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 .store {
+    
+
+
     width:80%;
     position: relative;
     left: 10%;
@@ -53,13 +56,23 @@
 .container{
     background-color: white;
     padding: 25px;  
+    
 }
+.vl {
+    border-left: 3px solid rgb(149, 158, 149);
+    height: 100%;
+    position: absolute;
+    left: 10px;
+  }
 
 /* Mobile view starts here */
 @media screen and (max-width: 360px) {
 .container{
     float: left;
     padding: 0px; 
+    .vl{
+        display: none;
+    }
 }
 .store{
     position: relative;

@@ -17,7 +17,26 @@ img {vertical-align: middle;height: 400px;}
   box-sizing: none;
   align-self: center;
 }
-
+.seller_button_store{
+  border-radius: 12px;
+    background-color: #be9523; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 60%;
+    
+}
+.s{
+  width: 70%;
+  margin: auto;
+  
+}
 /* Next & previous buttons */
 .prev, .next {
   cursor: pointer;

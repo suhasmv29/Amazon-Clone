@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index' 
   get 'carts/empty_cart'
+  get 'store/seller'
   resources :orders
   resources :line_items
   resources :carts

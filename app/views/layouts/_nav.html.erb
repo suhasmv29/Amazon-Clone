@@ -18,7 +18,11 @@
                 <div style="margin:5px;"><i style="font-size:22px" class="fa">&#xf2be;Hello,<%if current_user.present?%>
                         <%=current_user.email%>
                         <%else%>
-                        <%= link_to "Sign_in",user_session_path,style:"color:white;text-decoration: none;"%>
+                            <%if current_seller.present?%>
+                                <%= current_seller.email%>
+                            <%else%>
+                            <%= link_to "Sign in user",user_session_path,style:"color:white;text-decoration: none;"%>
+                            <%end%>
                         <%end%>
                     </i></div>
                 <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a></div>
@@ -48,7 +52,7 @@
             </form>
 
             <div class="dropdown" style="color:white">
-
+                <%if !current_seller.present?%>
                 <span>
                     <%if current_user.present?%>
 
@@ -59,7 +63,8 @@
                     <p><b>Account & Lists</b></p>
                     <%end%>
                 </span>
-
+                
+                
                 <div class="dropdown-content" style="color:black;">
                     <div class="">
                         <% if !current_user.present?%>
@@ -84,26 +89,21 @@
                     </div>
 
                 </div>
+                <%end%>
 
             </div>
             <div class="return" style="background-color:transperant;">
 
             </div>
             <% if current_user.present?%>
-            <div class="cart">
-                <%if @cart.present?%>
-                    <%= link_to  "cart", cart_path(@cart.id),class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
-                <% else%>
-                    <%= link_to "cart",carts_empty_cart_path,class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
-                <%end%>
+                <div class="cart">
+                    <%if @cart.present?%>
+                        <%= link_to  "cart", cart_path(@cart.id),class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
+                    <% else%>
+                        <%= link_to "cart",carts_empty_cart_path,class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
+                    <%end%>
 
-
-    
-            </div>
-            <%else%>
-            <div class="cart">
-                <%= link_to  "cart", new_user_session_path,class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
-            </div>
+                </div>
             <%end%>
 
 
@@ -111,17 +111,6 @@
         </div>
 
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <script>
         function openNav() {

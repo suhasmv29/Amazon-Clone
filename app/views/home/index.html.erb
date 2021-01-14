@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
     <div class="slideshow-container">
 
         <div class="mySlides fade">
@@ -104,10 +105,16 @@
                 <%end%>
                 
                 <%else%>
-                <h2>Sign in for your best experience</h2>
-                <%= button_to  "Sign in", user_session_path%>
-                <%= button_to  "Seller Sign in", seller_session_path%>
-                <%= link_to  "Seller Sign out", destroy_seller_session_path, method: :delete %>
+                    <div class="s">
+                    <%if !current_seller.present?%>
+    
+                        <h2>Sign in for selling your products</h2>                    
+                        <%= button_to  "Seller Sign in", seller_session_path, class:'seller_button_store'%>
+                    <%else%>
+                        <h2>Sign out for seller</h2>
+                        <%= link_to  "Seller Sign out", destroy_seller_session_path, method: :delete,class:'seller_button_store' %>
+                    <%end%>
+                    </div>
 
                 <%end%>
             </div>
