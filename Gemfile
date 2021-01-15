@@ -27,6 +27,8 @@ gem 'pry', '~> 0.13.1'
 gem 'hirb'
 gem 'simple_form'
 
+gem 'stripe'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

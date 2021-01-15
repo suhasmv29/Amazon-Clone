@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :line_items
   resources :carts
+  resources :charges
   # get 'store/index'
   get 'store/index', as: 'store_index'
   
