@@ -4,9 +4,9 @@
     <div class="login-form">
         <p style="font-size:24px">Login for seller </p>
         <h3>Username:</h3>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder:"Username" %><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",placeholder:"Username", class:'input' %><br>
         <h3>Password:</h3>
-        <%= f.password_field :password, autocomplete: "current-password",placeholder:"Password" %>
+        <%= f.password_field :password, autocomplete: "current-password",placeholder:"Password", class:'input' %>
         <br>
         <% if devise_mapping.rememberable? %>
         <div class="field">
@@ -17,6 +17,11 @@
         <%= f.submit "Log in",class:"session_button"%>
         <br>
         <br>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+            <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+        <% end %>
+    </div>
+    <div class="sign_up_button">
         <%= render "sellers/shared/links" %>
     </div>
 </div>

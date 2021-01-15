@@ -1,29 +1,38 @@
 <div class="login">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %> </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "sellers/shared/error_messages", resource: resource %>
 
     <div class="login-form">
-        <p style="font-size:24px">Sign up for Seller </p>
-        <h3 style="color:black;">Username:</h3>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-        <h3 style="color:black;">Password:</h3>
+        <p style="font-size:24px">Sign up for seller </p>
+        <h3 style="color:black;">Your name</h3><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:'input' %><br>
+        <h3 style="color:black;">Password:</h3><br>
 
 
-        <%= f.password_field :password, autocomplete: "new-password" %><br>
+        <%= f.password_field :password, autocomplete: "new-password", class:'input' %><br>
         <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
         <br>
         <h3 style="color:black;">Password Confirmation:</h3><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %><br>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class:'input' %><br>
         <br>
+        <p style="text-align:left;padding-left: 50px;">
+        We will send you a text to verify your phone.<br>
+        Message and Data rates may apply.
+        </p>
+        <%= f.submit "Continue",class:'session_button' %>
 
-        <%= f.submit "Sign up",class:'session_button' %>
-
         <br>
-        <a class="sign-up">Sign Up!</a>
         <br>
+        <span>
         <%= render "sellers/shared/links" %>
+        </span>
     </div>
 </div>
 
 <% end %>
+
+
+

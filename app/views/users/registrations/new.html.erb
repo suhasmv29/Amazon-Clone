@@ -5,24 +5,34 @@
 
     <div class="login-form">
         <p style="font-size:24px">Sign up for user </p>
-        <h3 style="color:black;">Username:</h3>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-        <h3 style="color:black;">Password:</h3>
+        <h3 style="color:black;">Your name</h3><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:'input' %>
+        <h3 style="color:black;">Password:</h3><br>
 
 
-        <%= f.password_field :password, autocomplete: "new-password" %><br>
+        <%= f.password_field :password, autocomplete: "new-password", class:'input' %><br>
         <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
         <br>
         <h3 style="color:black;">Password Confirmation:</h3><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %><br>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class:'input' %><br>
         <br>
-        <%= f.submit "Sign up",class:'session_button' %>
+        <p style="text-align:left;padding-left: 50px;">
+        We will send you a text to verify your phone.<br>
+        Message and Data rates may apply.
+        </p>
+        <%= f.submit "Continue",class:'session_button' %>
+
 
         <br>
         <br>
+        <span>
+        Already have an account?
         <%= render "users/shared/links" %>
+        </span>
+        <p>Buying for work? <%= link_to  "Create a free business account", new_seller_registration_path %> </p>
+        
     </div>
 </div>
 
