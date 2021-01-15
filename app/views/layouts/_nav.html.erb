@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div style="background-color:#000015; width:100%;top:0;" class="web-nav">
+    <div style="background-color:#131921; width:100%;top:0;" class="web-nav">
         <div id="mySidenav" class="sidenav">
 
             <div style="display:flex;background-color:#0F1111;color:white;top:0px;height:100px;align-items:center;">
@@ -70,7 +70,7 @@
                 <div class="dropdown-content" style="color:black;">
                     <div class="">
                         <% if !current_user.present?%>
-                        <%= link_to  "Sign In", new_user_session_path%>
+                        <%= button_to  "Sign In", new_user_session_path, style:'background-color:#efbb31;border-radius:5px;width:120px;height:50px;'%>
 
                         <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
                         <%else%>
@@ -101,6 +101,7 @@
             <% if current_user.present?%>
                 <div class="cart">
                     <%if @cart.present?%>
+                        <span style="color:yellow"><%= LineItem.where(cart_id: @cart.id).count%></span>
                         <%= link_to  "cart", cart_path(@cart.id),class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
                     <% else%>
                         <%= link_to "cart",carts_empty_cart_path,class:"fa fa-shopping-cart",style: "font-size:20px;color:white;text-decoration: none;" %>
@@ -114,6 +115,7 @@
         </div>
 
     </div>
+    <%= render  "layouts/categories" %>
 
     <script>
         function openNav() {
@@ -124,6 +126,7 @@
             document.getElementById("mySidenav").style.width = "0";
         }
     </script>
+    
 </body>
 
 </html>

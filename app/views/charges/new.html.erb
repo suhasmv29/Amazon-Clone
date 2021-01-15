@@ -1,4 +1,5 @@
 <%= form_tag charges_path do %>
+<div style="height:800px;display:flex;flex-direction:column;justify-content:center;width:50%;margin:auto;">
   <article>
     <% if flash[:error].present? %>
       <div id="error_explanation">
@@ -6,9 +7,10 @@
       </div>
     <% end %>
     <label class="amount">
-        <h1><span>Amount: <%= number_to_currency(@amount)%></span></h1>
+        <h1 style="align-self:center;font-size:36px;line-height:40px;">Please Check the correct amount to be checked out <br> <p style="text-align:center;font-size:36px;">Amount:<%= number_to_currency(@amount)%></p></h1>
     </label>
   </article>
 
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-description="Total of your orders" data-amount=<%=@amount*100%> data-locale="auto"></script>
+  <p style="width:140px;height:40px;align-self:center;"><script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-description="Total of your orders" data-amount=<%=@amount*100%> data-locale="auto"></script></p>
+</div>
 <% end %>

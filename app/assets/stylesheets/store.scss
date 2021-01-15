@@ -5,9 +5,7 @@
     
 
 
-    width:80%;
-    position: relative;
-    left: 10%;
+    
     // max-width: 80em;
     ul.catalog {
     border-top: solid 0.250em;
@@ -56,14 +54,12 @@
 .container{
     background-color: white;
     padding: 25px;  
+    width:80%;
+    margin:auto;
+    border-left:3px solid rgb(149, 158, 149);
     
 }
-.vl {
-    border-left: 3px solid rgb(149, 158, 149);
-    height: 100%;
-    position: absolute;
-    left: 10px;
-  }
+
 
 /* Mobile view starts here */
 @media screen and (max-width: 360px) {

@@ -136,7 +136,21 @@ body {
 .ama_on{
     width: 60px;
     height:30px;
+    
 }
+
+// Categories bar 
+.categories{
+    display:flex;
+    justify-content: space-around;
+    background-color: #232F3E;
+  
+    a{
+      padding: 10px;
+      text-decoration: none;
+      color:white;
+    }
+  }
 
 
 
@@ -195,6 +209,9 @@ body {
     body{
         /* width: 330px; */
         width: auto;
+    }
+    .categories{
+        display: none;
     }
 
 
