@@ -1,7 +1,13 @@
-<tr>
-    <td><%= link_to  image_tag(line_item.product.image_url), store_index_url,class: 'image' %></td>
 
-    <td class="quantity"><%= line_item.quantity %></td>
-    <td><%= line_item.product.title %></td>
-    <td class="price"><%= number_to_currency(line_item.total_price) %></td>
-</tr>
+<div class="line_items_1">
+    <div style="width:320px" class="image_ke_liye">
+       <%= link_to  image_tag(line_item.product.image_url), store_index_url %></div>
+    <div>
+    
+    <p style="font-size:16px;"><%= line_item.product.title %></p>
+
+    <p style="font-size:16px;"><b>Quantity:</b><%= line_item.quantity %></p>
+    <p style="font-size:16px;"><b><%= number_to_currency(line_item.total_price) %></b></p>
+    <%= button_to 'Delete', line_item, method: :delete, data: {confirm: "Are you sure"} ,class: 'line_item_button'%>
+    </div>
+</div>

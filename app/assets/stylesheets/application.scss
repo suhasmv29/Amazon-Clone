@@ -133,7 +133,10 @@ body {
 }
 
 
-
+.ama_on{
+    width: 60px;
+    height:30px;
+}
 
 
 
@@ -197,5 +200,66 @@ body {
 
 
 }
+
+@media screen and (max-width: 768px) {
+    .sidenav {
+      
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+    .location{
+        display: none;
+    }
+    .search{
+        display:flex;
+        width: 95%;
+        order:3;
+        height: 50px;
+        
+    }
+
+
+    .dropdown{
+        display: none;
+    }
+    .return{
+        display: none;
+    }
+    .amz-icon{
+        
+        width:50%;
+    }
+    
+    .cart{
+        width: 50px;
+        position: relative;
+        left: 10px;
+    }
+    .nav-body{
+        display:flex;
+        flex-wrap: wrap;
+    }
+
+    .amz-icon .amz_p{
+        font-size: 10px;
+    }
+    .cn{
+        display: none;
+    }
+    .web-nav{
+        padding: 10px;
+    }
+    body{
+        /* width: 330px; */
+        width: auto;
+    }
+
+
+
+}
+
 
 

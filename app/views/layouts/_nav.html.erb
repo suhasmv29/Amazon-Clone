@@ -38,10 +38,12 @@
 
 
         <div class="nav-body">
-            <span style="font-size:30px;cursor:pointer;display:flex;" onclick="openNav()" class="amz-icon">
-                <p class="amz_p" style="color:white;font-size: 30px;text-align:center;margin-top:50px;">&#9776;</p> <img src="https://pngimg.com/uploads/amazon/amazon_PNG25.png" class="ama_i" alt="" style="width: 100px;height:100px;margin-top:15px;">
-            </span>
-
+            <div style="font-size:30px;cursor:pointer;display:flex;" onclick="openNav()" class="amz-icon">
+                <p class="amz_p" style="color:white;font-size: 30px;text-align:center;margin-top:50px;">&#9776;</p> 
+            </div>
+            <div style="margin-top:20px;">
+                <%= link_to  image_tag('https://mikekitko.com/wp-content/uploads/2019/10/amazon-logo-white.png'), store_index_url,class:"ama_on" %>
+            </div>
             <div class="location">
                 <button style='font-size:14px;background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;text-align:center;'> <i class='fas fa-map-marker-alt'>Location</i></button>
             </div>
@@ -73,6 +75,7 @@
                         <p>New customer? <%= link_to  "Start here", new_user_registration_path %></p>
                         <%else%>
                         <%= link_to  "Sign out", destroy_user_session_path, method: :delete %>
+                        
                         <%end%>
 
                     </div>
@@ -83,7 +86,7 @@
                         </div>
                         <div class="">
                             <h2>Your Account</h2>
-                            <p><a href="#">Your Accounts</a></p>
+                            <p><%= link_to  "Your Accounts",   edit_user_registration_path  %></p>
                             <p><a href="#">Your Orders</a></p>
                         </div>
                     </div>
