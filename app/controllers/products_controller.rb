@@ -17,6 +17,11 @@ class ProductsController < ApplicationController
     end
 
   end
+  def search
+    if params[:search_key]
+      @products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+    end
+  end
 
   # GET /products/new
   def new

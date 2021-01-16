@@ -15,7 +15,10 @@
 
 
     <%= yield %>
+     <% unless action_name == "create" %>
     <%= render  "layouts/footer" %>
+    <% end %>
+    
     </main>
   </body>
 </html>

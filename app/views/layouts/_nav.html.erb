@@ -13,7 +13,7 @@
     <div style="background-color:#131921; width:100%;top:0;" class="web-nav">
         <div id="mySidenav" class="sidenav">
 
-            <div style="display:flex;background-color:#0F1111;color:white;top:0px;height:100px;align-items:center;">
+            <div style="display:flex;background-color:#232f3e;color:white;top:0px;height:100px;align-items:center;">
 
                 <div style="margin:5px;"><i style="font-size:22px" class="fa">&#xf2be;Hello,<%if current_user.present?%>
                         <%=current_user.email%>
@@ -28,11 +28,43 @@
                 <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a></div>
 
             </div>
-
-            <%= link_to  "Abouts", root_path%>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a>
+            <div class="" style="width:320px;">
+            <div class="sidenav_items">
+                <h2>Trending</h2>
+                <p><%= link_to  "Best Sellers", root_path%></p>
+                <a>New Releases</a>
+                <a>Movers and Shakers</a>
+            </div>
+            <div class="sidenav_items">
+                <h2>Digital Content And Devices</h2>
+                <a>Echo & Alexa</a>
+                <a>Fire TV</a>
+                <a>Kindle E-Readers & eBooks</a>
+                <a>Audible Audiobooks</a>
+                <a>Amazon prime Video</a>
+                <a>Amazon prime Music</a>
+            </div>
+            <div class="sidenav_items">
+                <h2>Shop By Department</h2>
+                <a>Mobiles, Computers</a>
+                <a>TV, Appliances, Electronics</a>
+                <a>Men's Fashion</a>
+                <a>Women's Fashion</a>
+                <a>See All</a>
+            </div>
+            <div class="sidenav_items">
+                <h2>Programs & Features</h2>
+                <a>Gift Cards & Mobile Recharges</a>
+                <a>Flight Tickets</a>
+                <a>Full Store Directory</a>
+            </div>
+            <div class="sidenav_items">
+                <h2>Help & Settings</h2>
+                <a>Your Account</a>
+                <a>Customer Service</a>
+                <a>Sign In</a>
+            </div>
+            </div>
 
         </div>
 
@@ -48,10 +80,13 @@
                 <button style='font-size:14px;background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;color:white;text-align:center;'> <i class='fas fa-map-marker-alt'>Location</i></button>
             </div>
 
-            <form action="/action_page.php" class="search">
-                <input type="text" placeholder="Search.." name="search" style="width:80%;height:40px;" class="search-1">
-                <button type="submit" style="background-color: orange;height:40px;border-radius:3px;"><i class="fa fa-search"></i></button>
+
+            <form action="<%= search_path %>" class="search">
+                <input type="text" placeholder="Search.." name="search_key" style="width:80%;height:40px;" class="search-1">
+                <%= button_to  "Search", search_path,class:"fa fa-search",style:"background-color: orange;height:40px;border-radius:3px;" %>
             </form>
+
+
 
             <div class="dropdown" style="color:white">
                 <%if !current_seller.present?%>
@@ -126,6 +161,8 @@
             document.getElementById("mySidenav").style.width = "0";
         }
     </script>
+
+   
     
 </body>
 

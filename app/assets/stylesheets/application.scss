@@ -23,7 +23,7 @@ body {
 
 .sidenav {
     height: 100%;
-    width: 0;
+    width:0%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -31,7 +31,7 @@ body {
     background-color: white;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    
 
 }
 
@@ -48,6 +48,13 @@ body {
 .sidenav a:hover {
     color: #f1f1f1;
 }
+
+// side nav elements
+.sidenav_items{
+    border-bottom:1px solid grey;
+    line-height: 50px;
+  }
+
 
 .sidenav .closebtn {
     
