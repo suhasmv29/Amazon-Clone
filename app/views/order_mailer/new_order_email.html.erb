@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>You got a new order from <%= @order.name %>!</p>
+    <p>
+    Order details<br>
+    --------------------------
+    </p>
+    <p>Name: <%= @order.name %></p>
+    <p>Email: <%= @order.email %></p>
+    <p>Address: <%= @order.address %></p>
+    <p>Phone: <%= @order.pay_type %></p>
+    <p>
+    <p>Order Id: <%= @order.id%><br>
+    --------------------------
+    </p>
+
+    <%@l = LineItem.where(order_id: @order)%>
+    <strong>Product details:</strong>
+    <%sum = 0%>
+    <% @l.each do |quan|%>
+      <div class="product_details">
+        <div class="order_image"><%=image_tag(quan.product.image_url)%></div>
+          <div class="" style="padding-left:10px;">
+                    <div class="product_p"><b>Title:</b><%= quan.product.title%></div>
+                    <div class="product_p"><b>Quantity : </b><%=quan.quantity%></div>
+                    <div class="product_p"><b>Price :</b><%=number_to_currency(quan.product.price * quan.quantity)%></div>
+
+          </div>
+        </div>
+      </div>
+      <% sum = sum + (quan.product.price * quan.quantity)%>
+    <%end%>
+    <p>Total amount: <%= sum %></p>
+    
+  </body>
+</html>

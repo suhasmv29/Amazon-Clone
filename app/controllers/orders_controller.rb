@@ -40,6 +40,9 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        OrderMailer.new_order_email(@order).deliver
+        #OrderMailer.new_order_email(@order).deliver_later(wail: 5.minutes)
+
         @cart = session[:cart_id]
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil

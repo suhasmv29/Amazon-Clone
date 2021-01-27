@@ -26,6 +26,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    
 
     @categories = Category.all.map { |c| [c.name, c.id] }
   end
@@ -38,7 +39,9 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.category_id = 1
-
+    
+   
+    
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
