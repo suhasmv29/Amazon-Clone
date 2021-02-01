@@ -9,7 +9,6 @@ class LineItemsController < ApplicationController
   # GET /line_items.json
   def index
     @line_items = LineItem.all
-
   end
 
   # GET /line_items/1
@@ -37,7 +36,9 @@ class LineItemsController < ApplicationController
     @cart.save
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to store_index_url, notice: 'Line item was successfully created.' }
+        binding.pry
+
+        format.html { redirect_to root_path, notice: 'Line item was successfully created.' }
         format.js {@current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
       else

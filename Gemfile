@@ -26,7 +26,10 @@ gem 'devise'
 gem 'pry', '~> 0.13.1'
 gem 'hirb'
 gem 'simple_form'
+gem 'ratyrate'
 
+gem 'delayed_job_active_record'
+gem 'daemons'
 gem 'stripe'
 
 # Use Active Storage variant

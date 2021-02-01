@@ -1,3 +1,8 @@
 --require spec_helper
+<<<<<<< HEAD
 --format documentation
 --color
+||||||| c698ea4
+=======
+--format documentation
+>>>>>>> 87acb0d759f18653c03803b72497c6b4340b909a

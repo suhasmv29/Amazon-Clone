@@ -1,3 +1,4 @@
+
 FactoryBot.define do
     factory :lineitem do
 
@@ -15,3 +16,5 @@ FactoryBot.define do
         password {"123456"}
     end
 end
+
+
