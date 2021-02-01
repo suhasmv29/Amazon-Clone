@@ -3,4 +3,6 @@ class Seller < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  validates_presence_of :email
+  validates_presence_of :password
 end

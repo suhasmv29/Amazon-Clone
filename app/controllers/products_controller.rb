@@ -7,6 +7,8 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
+    #[render xml: @products
+    #render json: @products
   end
 
   # GET /products/1
@@ -46,6 +48,7 @@ class ProductsController < ApplicationController
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
+        format.xml { render xml: @product}
       else
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -60,6 +63,7 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
+        format.xml { render xml: @product}
       else
         format.html { render :edit }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -74,6 +78,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
+      format.xml { render xml: @product}
     end
   end
 
