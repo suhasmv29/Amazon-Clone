@@ -9,6 +9,6 @@ RSpec.describe LineItem, type: :model do
   end
   it { should belong_to(:cart) }
   it { should belong_to(:product).optional } 
-  it { should belong_to(:order).optional } 
+  # it { should belong_to(:order).optional } 
 
 end
