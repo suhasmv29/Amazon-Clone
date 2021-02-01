@@ -17,14 +17,14 @@
 
         </h4>
         <p>
-            <strong>Price:</strong>
-            <%= @product.price %>
+            <h3><strong>Price:</strong>
+            <%= number_to_currency(@product.price) %></h3>
         </p>
 
         <%if current_user.present?%>
         <%= button_to 'Add to Cart', line_items_path(product_id: @product.id),class:'button' %>
         <%else%>
-        <%= button_to 'Add to Cart', user_session_path %>
+        <%= button_to 'Add to Cart', user_session_path,class:'button' %>
 
         <%end%>
     </div>

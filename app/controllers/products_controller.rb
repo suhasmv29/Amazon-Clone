@@ -14,12 +14,19 @@ class ProductsController < ApplicationController
   def show
     if current_user.present?
       @order = Order.where(user_id: current_user.id)
+      
     end
 
   end
+
   def search
     if params[:search_key]
       @products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+      if @products
+        respond_to do |format|
+          format.js {render partial: 'products/search'}
+        end
+      end
     end
   end
 

@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  # subject { User.create }
+
+  # it 'sends an email' do
+  #   expect { subject.welcome_send(User.first) }
+  #     .to change { ActionMailer::Base.deliveries.count }.by(1)
+
+  # end
 end

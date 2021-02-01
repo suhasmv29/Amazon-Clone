@@ -26,7 +26,10 @@ gem 'devise'
 gem 'pry', '~> 0.13.1'
 gem 'hirb'
 gem 'simple_form'
+gem 'ratyrate'
 
+gem 'delayed_job_active_record'
+gem 'daemons'
 gem 'stripe'
 
 # Use Active Storage variant
@@ -59,7 +62,7 @@ group :test do
   gem 'webdrivers'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
-  gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'faker'
 end
 
