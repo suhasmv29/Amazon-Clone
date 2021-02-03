@@ -7,6 +7,7 @@ RSpec.describe "Stores", type: :request do
       get "/store/index"
       expect(response).to have_http_status(:success)
     end
+    
   end
 
 end

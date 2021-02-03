@@ -8,12 +8,12 @@ class User < ApplicationRecord
 
   after_create :welcome_send
   def welcome_send
-    WelcomeMailer.welcome_send(self).deliver
-    # SendEmailJob.perform_later(self)
+    # WelcomeMailer.welcome_send(self).deliver
+    SendEmailJob.perform_later(self)
   end
   
-  def after_confirmation
-    # WelcomeMailer.send_welcome_email(self).deliver
-    AfterConfirmationJob.perform_later(self)
-  end
+  # def after_confirmation
+  #   # WelcomeMailer.send_welcome_email(self).deliver
+  #   AfterConfirmationJob.perform_later(self)
+  # end
 end

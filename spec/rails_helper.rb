@@ -70,10 +70,36 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+
+  config.include(ActiveJob::TestHelper)
 end
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
     with.library :rails
+  end
+end
+# you will also need the code below for the test
+# to clear out the jobs between test runs
+class ActiveJob::QueueAdapters::DelayedJobAdapter
+  class EnqueuedJobs
+    def clear
+      Delayed::Job.where(failed_at:nil).map &:destroy
+    end
+  end
+  
+  class PerformedJobs
+    def clear
+      Delayed::Job.where.not(failed_at:nil).map &:destroy
+    end
+  end
+  
+  def enqueued_jobs
+    EnqueuedJobs.new
+  end
+  
+  def performed_jobs
+    PerformedJobs.new
   end
 end

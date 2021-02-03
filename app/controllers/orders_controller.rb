@@ -60,8 +60,8 @@ class OrdersController < ApplicationController
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
-        format.html { render :edit }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -91,10 +91,10 @@ class OrdersController < ApplicationController
   def ensure_cart_isnt_empty
     redirect_to store_index_url, notice: 'Your cart is empty' if @cart.line_items.empty?
   end
-  def check
-    if current_user.present?
-      @order = Order.where(user_id: current_user.id)
-    end
-  end
+  # def check
+  #   if current_user.present?
+  #     @order = Order.where(user_id: current_user.id)
+  #   end
+  # end
 
 end
