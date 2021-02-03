@@ -17,8 +17,6 @@ class OrdersController < ApplicationController
   def show
     @order = Order.where(user_id: current_user.id)
     @cart = Cart.where(user_id: current_user.id).first
-    # @cart = Cart.find(user_id: current_user.id)
-    # @line = LineItem.where(cart_id: @cart.ids)
 
   end
 
@@ -60,8 +58,8 @@ class OrdersController < ApplicationController
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
-        # format.html { render :edit }
-        # format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.html { render :edit }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
   end

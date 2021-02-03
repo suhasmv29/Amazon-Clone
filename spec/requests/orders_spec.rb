@@ -13,53 +13,67 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/orders", type: :request do
-  # Order. As you add validations to Order, be sure to
-  # adjust the attributes here as well.
-  # let(:valid_attributes) {
-  #   skip("Add a hash of attributes valid for your model")
-  # }
-
-  # let(:invalid_attributes) {
-  #   skip("Add a hash of attributes invalid for your model")
-  # }
-  let!(:user) { create(:user) }
-  before do
-    sign_in(user) # Factory Bot user
-  end
-
 
   describe "GET /index" do
+    let!(:user) { create(:user) }
     context 'When user has signed in' do
-
-      
+      before do
+        sign_in(user)
+      end
       it "renders a successful response" do
         order = create(:order, user_id: user.id, email: user.email)
         get orders_url
         expect(response).to be_successful
       end
-    end   
+    end
+    context 'When user has not signed in' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get orders_url
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path) 
+      end
+    end 
   end
 
   describe "GET /show" do
-    context 'when user has signed to display' do
+    let!(:user) { create(:user) }
+
+    context 'when user has signed' do
+      before do
+        sign_in(user)
+      end
       it "renders a successful response" do
         order = create(:order, user_id: user.id, email: user.email)
         get order_url(order)
         expect(response).to be_successful
       end
     end
-    
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get order_url(order)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)       end
+    end
+
   end
 
   describe "GET /new" do
+    let!(:user) { create(:user) }
+
     context 'User must signed in' do
+      before do
+        sign_in(user)
+      end
 
       it "renders a successful response" do
 
         get new_order_url
         expect(response).to redirect_to(store_index_path)
         expect(flash[:notice]).to match(/Your cart is empty*/)
-
       end
       it "should get new" do
         category = create(:category)
@@ -68,32 +82,52 @@ RSpec.describe "/orders", type: :request do
         get new_order_url
         assert_response :success
       end
-      
-    end 
+    end
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get new_order_url
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(store_index_url)
+      end
+    end
     
   end
 
   describe "GET /edit" do
+    let!(:user) { create(:user) }
+
+
     context 'User signed in' do
-
-
+      before do
+        sign_in(user)
+      end
       it "render a successful response" do
         order = create(:order, user_id: user.id, email: user.email)
         get edit_order_url(order)
         expect(response).to be_successful
       end
-      
+    end
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get edit_order_url(order)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 
   describe "POST /create" do
+    let!(:user) { create(:user) }
+
     context "with valid parameters" do
-
-      order_attributes = FactoryBot.attributes_for(:order)
-
+      before do
+        sign_in(user) 
+      end
       it "creates a new Order" do
-
-
         expect {
           order = build(:order, user_id: user.id, email: user.email)
 
@@ -102,7 +136,6 @@ RSpec.describe "/orders", type: :request do
             pay_type: order.pay_type } }
         }.to change(Order, :count).by(1)
       end
-
       it "redirects to the created order" do
         order = build(:order, user_id: user.id, email: user.email)
 
@@ -114,8 +147,10 @@ RSpec.describe "/orders", type: :request do
     end
 
     context "with invalid parameters" do
-
-      it "does not create a new Order" do
+      before do
+        sign_in(user) 
+      end
+      it "does not create a new order" do
         expect {
           order = build(:order, user_id: user.id, email: user.email)
 
@@ -124,7 +159,7 @@ RSpec.describe "/orders", type: :request do
         }.to change(Order, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "renders new page" do
         order = build(:order, user_id: user.id, email: user.email)
 
         post orders_url, params: { order: { address: order.address,
@@ -132,22 +167,29 @@ RSpec.describe "/orders", type: :request do
         expect(response).to be_successful
         expect(response).to render_template(:new)
       end
-      it "renders to new page " do
-        order = build(:order, user_id: user.id, email: user.email)
 
+    end
+
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
         post orders_url, params: { order: { address: order.address,
-          email: order.email, name: order.name } }
-        expect(response).to render_template(:new)
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
       end
-
     end
   end
 
   describe "PATCH /update" do
+    let!(:user) { create(:user) }
+
     context "with valid parameters" do
-      # let(:new_attributes) {
-      #   skip("Add a hash of attributes valid for your model")
-      # }
+      before do
+        sign_in(user) 
+      end
 
 
       it "updates the requested order" do
@@ -168,25 +210,42 @@ RSpec.describe "/orders", type: :request do
       end
     end
 
-    # context "with invalid parameters" do
-    #   let!(:user) { create(:user) }
+    context "with invalid parameters" do
+      before do
+        sign_in(user)
 
-    #   before do
-    #     sign_in(user) # Factory Bot user
+      end
+      it "renders edit page" do
+        order = create(:order, user_id: user.id, email: user.email)
+        order.address = ''
+        patch order_url(order),params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
+        expect(response).to be_successful
+        expect(response).to render_template(:edit)
+      end
+    end
 
-    #   end
-    #   it "renders a successful response (i.e. to display the 'edit' template)" do
-    #     order = create(:order, user_id: user.id, email: user.email)
-    #     patch order_url(order),params: { order: { address: order.address,
-    #       email: order.email, name: order.name,
-    #       pay_type: order.pay_type } }
-    #     expect(response).to be_successful
-    #   end
-    # end
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        post orders_url, params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 
   describe "DELETE /destroy" do
+    let!(:user) { create(:user) }
+
     context 'when user has signed in' do
+      before do
+        sign_in(user)
+      end
 
       it "destroys the requested order" do
         order = create(:order, user_id: user.id, email: user.email)
@@ -199,6 +258,16 @@ RSpec.describe "/orders", type: :request do
         order = create(:order, user_id: user.id, email: user.email)
         delete order_url(order)
         expect(response).to redirect_to(orders_url)
+      end
+    end
+
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        delete order_url(order)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
     

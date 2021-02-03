@@ -13,15 +13,6 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/line_items", type: :request do
-  # LineItem. As you add validations to LineItem, be sure to
-  # adjust the attributes here as well.
-  # let(:valid_attributes) {
-  #   skip("Add a hash of attributes valid for your model")
-  # }
-
-  # let(:invalid_attributes) {
-  #   skip("Add a hash of attributes invalid for your model")
-  # }
 
   describe "GET /index" do
     context 'When user has signed in' do
@@ -40,7 +31,6 @@ RSpec.describe "/line_items", type: :request do
         get line_items_url
         expect(response).to be_successful
       end
-      
     end
     context 'When user has not signed in' do
       it "renders a unsuccessful response" do
@@ -52,35 +42,49 @@ RSpec.describe "/line_items", type: :request do
         lineitem.cart_id = 1
         lineitem.save
         get line_items_url
-        expect(response).to_not be_successful
-      end
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)       end
     end 
     
   end
 
   describe "GET /show" do
+    let!(:user) { create(:user) }
+
     context 'When user has signed in' do
-      let!(:user) { create(:user) }
       before do
         sign_in(user) # Factory Bot user
       end
-      it "renders a successful response" do
-        
+      it "renders a successful response" do      
         order = create(:order, user_id: user.id, email: user.email)
 
         category = create(:category)
         product = create(:product, category_id: category.id)
 
-
         cart = create(:cart)
         line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)
 
-        
         get line_item_url(line_item)
         expect(response).to be_successful
       end
-      
     end 
+    context 'When user has not signed in' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+
+        category = create(:category)
+        product = create(:product, category_id: category.id)
+
+        cart = create(:cart)
+        line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)
+        get line_item_url(line_item)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)       
+      end
+    end 
+
     
   end
 
@@ -99,7 +103,8 @@ RSpec.describe "/line_items", type: :request do
       it "renders a successful response" do
         get new_line_item_url
         expect(response).not_to be_successful
-      end
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)      end
     end
     
   end
@@ -133,7 +138,8 @@ RSpec.describe "/line_items", type: :request do
         line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)
         get edit_line_item_url(line_item)
         expect(response).not_to be_successful
-      end
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)      end
     end 
     
   end
@@ -165,36 +171,21 @@ RSpec.describe "/line_items", type: :request do
 
     context "with invalid parameters and has not signed in" do
       lineitem_attributes = FactoryBot.attributes_for(:product)
-
       it "does not create a new LineItem" do
         expect {
           post line_items_url, params: { line_item: lineitem_attributes }
         }.to change(LineItem, :count).by(0)
       end
-      # let!(:user) { create(:user) } 
-
-      # it "renders a successful response (i.e. to display the 'new' template)" do
-      #   sign_in(user) # Factory Bot user
-      #   category = create(:category)
-      #   product = create(:product, category_id: category.id)
-      #   # line_item=build(:line_item)
-      #   # binding.pry
-
-
-      #   post line_items_url, params: { product_id: product.id }
-      #   expect(response).to render_template(:new)
-      # end
     end
   end
 
   describe "PATCH /update" do
     let!(:user) { create(:user) }
 
-    before do
-      sign_in(user) # Factory Bot user
-    end
-    context "with valid parameters" do
-
+    context "When user has signed in" do
+      before do
+        sign_in(user) # Factory Bot user
+      end
 
       let(:new_attributes) {
         FactoryBot.build(:line_item,quantity:2)
@@ -228,9 +219,8 @@ RSpec.describe "/line_items", type: :request do
         expect(response).to redirect_to(line_item_url(line_item))
       end
     end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+    context 'when user has not signed in' do
+      it "render a unsuccessful response" do      
         order = create(:order, user_id: user.id, email: user.email)
 
         category = create(:category)
@@ -238,44 +228,70 @@ RSpec.describe "/line_items", type: :request do
 
         cart = create(:cart)
 
-        line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id,quantity:0)
-        patch line_item_url(line_item), params: { line_item: { product_id: product.id } }
-        expect(response).to be_successful
+        line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)
+
+        patch line_item_url(line_item), params: { line_item: { product_id: product.id }}
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)      
       end
-    end
+    end 
   end
+    
 
   describe "DELETE /destroy" do
     let!(:user) { create(:user) }
 
-    before do
-      sign_in(user) # Factory Bot user
-    end
-    it "destroys the requested line_item" do
-      order = create(:order, user_id: user.id, email: user.email)
+    context 'When user has signed in' do
 
-      category = create(:category)
-      product = create(:product, category_id: category.id)
-
-      cart = create(:cart)
-
-      line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)      
-      expect {
+      before do
+        sign_in(user) # Factory Bot user
+      end
+      it "destroys the requested line_item" do
+        order = create(:order, user_id: user.id, email: user.email)
+  
+        category = create(:category)
+        product = create(:product, category_id: category.id)
+  
+        cart = create(:cart)
+  
+        line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)      
+        expect {
+          delete line_item_url(line_item)
+        }.to change(LineItem, :count).by(-1)
+      end
+  
+      it "redirects to the line_items list" do
+        order = create(:order, user_id: user.id, email: user.email)
+  
+        category = create(:category)
+        product = create(:product, category_id: category.id)
+  
+        cart = create(:cart)
+  
+        line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id) 
         delete line_item_url(line_item)
-      }.to change(LineItem, :count).by(-1)
+        expect(response).to redirect_to(store_index_url)
+      end
     end
+    context 'when user has not signed in' do
+      it "render a unsuccessful response" do      
+        order = create(:order, user_id: user.id, email: user.email)
 
-    it "redirects to the line_items list" do
-      order = create(:order, user_id: user.id, email: user.email)
+        category = create(:category)
+        product = create(:product, category_id: category.id)
 
-      category = create(:category)
-      product = create(:product, category_id: category.id)
+        cart = create(:cart)
 
-      cart = create(:cart)
+        line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id)
 
-      line_item = create(:line_item,order_id: order.id,product_id: product.id,cart_id: cart.id) 
-      delete line_item_url(line_item)
-      expect(response).to redirect_to(store_index_url)
-    end
+        delete line_item_url(line_item)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)      
+      end
+    end 
+    
+
   end
 end

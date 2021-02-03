@@ -2,21 +2,16 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  # subject { User.create }
-
   context 'validates the presence' do
-    # binding.pry
-    # expect { subject.welcome_send(User.first) }
-    #   .to change { ActionMailer::Base.deliveries.count }.by(1)
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password) }
     it { is_expected.to have_one(:cart) }
-
   end
+  
   describe '#welcome_send' do
     context 'Sending the job' do
       let!(:user) { create(:user) }
-      
+
       # Checking job class name 
       it "Checking job class name " do
         expect{
