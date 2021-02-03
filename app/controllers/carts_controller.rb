@@ -27,11 +27,7 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    # if @cart.user_ids.include(current_user.id)
-    #   binding.pry
-    #   # redirect_to @cart(Cart.select(:id).where("user_id = :user_id", { user_id:  current_user.id }))
-    #   redirect_to root_path
-    # else
+  
     @cart = Cart.new(cart_params)
     
     respond_to do |format|

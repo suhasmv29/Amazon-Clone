@@ -8,15 +8,13 @@ RSpec.describe Product, type: :model do
     it { is_expected.to have_db_column(:price)}
   end
 
+  subject {described_class.new}
   # Testing the validations
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:description)}
   it { should validate_presence_of(:image_url)}
-  #it { should validate_presence_of(:price)}
-  #it { should validate_uniqueness_of(:title)}
+  
   it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0.1) }
-
-  # it { should belong_to(:user).without_validating_presence }
 
 
   # Checking the associations
@@ -25,5 +23,12 @@ RSpec.describe Product, type: :model do
 
   it { should belong_to(:category) }
   
+  describe "#ensure_not_referenced_by_any_line_item" do
+    let(:line_items) {create(:line_item)} 
+    
+    it 'Should throw some error' do
+      expect(line_items).to_not be_nil
+    end
+  end
   
 end

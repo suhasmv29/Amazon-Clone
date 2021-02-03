@@ -25,7 +25,7 @@ RSpec.describe "/products", type: :request do
   }
 
   describe "GET /index" do
-    it "renders a successful response" do
+    it "Product page has been loaded successfully" do
       Product.create! valid_attributes
       get products_url
       expect(response).to be_successful
@@ -33,23 +33,27 @@ RSpec.describe "/products", type: :request do
   end
 
   describe "GET /show" do
-    let!(:seller) { create(:seller) }
-    let!(:user) { create(:user) }
+    context 'When seller has signed in' do
+      let!(:seller) { create(:seller) }
+      let!(:user) { create(:user) }
 
       before do
         sign_in(user) # Factory Bot user
       end
-    it "renders a successful response" do
-      product = Product.create! valid_attributes
-      get product_url(product)
-      expect(response).to be_successful
+      it "Opens products page" do
+        product = Product.create! valid_attributes
+        get product_url(product)
+        expect(response).to be_successful
+      end
     end
-    
-    it "pics the orders perticular to user id" do
-      
-      # order = Order.where(user_id: seller.id)
-      # expect(order).to 
+    context 'When user has not signed in ' do
+      it "Url Not found" do
+        product = Product.create! valid_attributes
+        get product_url(product)
+        expect(response).not_to have_http_status(302)
+      end
     end
+
   end
 
   describe "GET /new" do
@@ -58,13 +62,13 @@ RSpec.describe "/products", type: :request do
       before do
         sign_in(seller) # Factory Bot user
       end
-      it "renders a successful response" do
+      it "Created a new product" do
         get new_product_url
         expect(response).to be_successful
       end
     end
     context 'When user has not signed in ' do
-      it "renders a successful response" do
+      it "Page cannot be opened" do
         get new_product_url
         expect(response).not_to be_successful
       end
@@ -101,9 +105,10 @@ RSpec.describe "/products", type: :request do
         }.to change(Product, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "redirects to new product page" do
         post products_url, params: { product: invalid_attributes }
         expect(response).to be_successful
+        expect(response).to render_template(:new)
       end
     end
   end
@@ -127,6 +132,8 @@ RSpec.describe "/products", type: :request do
         patch product_url(product), params: { product: valid_attributes }
         product.reload
         expect(response).to have_http_status(302)
+        expect(response).to redirect_to(product_url(product))
+      
       end
     end
   end
@@ -156,14 +163,13 @@ RSpec.describe "/products", type: :request do
         search_key != nil # Factory Bot user
       end
     it "finds a searched project by name" do
+      controller.params[:search_key] = 'a'
       Product.create! FactoryBot.build(:product, title: "arpit").attributes
-      products = Product.where("title LIKE ?","%#{search_key}%")
-      expect(products.first).to eq(products.last)
-      if products
-
-      end
+      products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+      get search_url(:search_key)
+      expect(response).to be_successful
+      expect(products).to eq(products.last)  
     end
-
   end
   
 end

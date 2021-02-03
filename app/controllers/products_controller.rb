@@ -3,20 +3,16 @@ class ProductsController < ApplicationController
   before_action :authenticate_seller!, only: %i[new edit destroy update]
 
 
-  # GET /products
-  # GET /products.json
+
   def index
     @products = Product.all
-    #[render xml: @products
-    #render json: @products
+   
   end
 
-  # GET /products/1
-  # GET /products/1.json
+  
   def show
     if current_user.present?
-      @order = Order.where(user_id: current_user.id)
-      
+      @order = Order.where(user_id: current_user.id)   
     end
 
   end
@@ -32,12 +28,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  # GET /products/new
+ 
   def new
     @product = Product.new
-    
-
-    #@categories = Category.all.map { |c| [c.name, c.id] }
   end
 
   # GET /products/1/edit
@@ -71,9 +64,6 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
         format.xml { render xml: @product}
-      # else
-      #   format.html { render :edit }
-      #   format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -89,15 +79,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  # def who_bought
-  #   @product = Product.find(params[:id])
-  #   @latest_order = @product.orders.order(:updated_at).last
-  #   if stale?(@latest_order)
-  #     respond_to do |format|
-  #       format.atom
-  #     end
-  #   end
-  # end
+
 
   private
 

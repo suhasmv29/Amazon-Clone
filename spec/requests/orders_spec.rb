@@ -17,7 +17,6 @@ RSpec.describe "/orders", type: :request do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     FactoryBot.build(:order).attributes 
-    # { :id => 1 ,:name => "Test title!", :address => "This is a test description", :email => "draft@email.com", :pay_type => "Credit card", :user_id => 3 } 
   }
 
   let(:invalid_attributes) {
@@ -29,7 +28,6 @@ RSpec.describe "/orders", type: :request do
       Order.create! valid_attributes
       get orders_url
       expect(response).to have_http_status(:found)
-      # expect(response).to have_current_path(new_user_session_path)
     end
   end
 
