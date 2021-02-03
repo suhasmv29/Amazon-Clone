@@ -16,7 +16,8 @@ RSpec.describe "/orders", type: :request do
   # Order. As you add validations to Order, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryBot.build(:order).attributes 
+    # { :id => 1 ,:name => "Test title!", :address => "This is a test description", :email => "draft@email.com", :pay_type => "Credit card", :user_id => 3 } 
   }
 
   let(:invalid_attributes) {
@@ -27,7 +28,8 @@ RSpec.describe "/orders", type: :request do
     it "renders a successful response" do
       Order.create! valid_attributes
       get orders_url
-      expect(response).to be_successful
+      expect(response).to have_http_status(:found)
+      # expect(response).to have_current_path(new_user_session_path)
     end
   end
 
@@ -35,14 +37,14 @@ RSpec.describe "/orders", type: :request do
     it "renders a successful response" do
       order = Order.create! valid_attributes
       get order_url(order)
-      expect(response).to be_successful
+      expect(response).to have_http_status(:found)
     end
   end
 
   describe "GET /new" do
     it "renders a successful response" do
       get new_order_url
-      expect(response).to be_successful
+      expect(response).to have_http_status(:found)
     end
   end
 
@@ -50,7 +52,7 @@ RSpec.describe "/orders", type: :request do
     it "render a successful response" do
       order = Order.create! valid_attributes
       get edit_order_url(order)
-      expect(response).to be_successful
+      expect(response).to have_http_status(:found)
     end
   end
 
@@ -64,7 +66,7 @@ RSpec.describe "/orders", type: :request do
 
       it "redirects to the created order" do
         post orders_url, params: { order: valid_attributes }
-        expect(response).to redirect_to(order_url(Order.last))
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -99,7 +101,7 @@ RSpec.describe "/orders", type: :request do
         order = Order.create! valid_attributes
         patch order_url(order), params: { order: new_attributes }
         order.reload
-        expect(response).to redirect_to(order_url(order))
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -123,7 +125,7 @@ RSpec.describe "/orders", type: :request do
     it "redirects to the orders list" do
       order = Order.create! valid_attributes
       delete order_url(order)
-      expect(response).to redirect_to(orders_url)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end

@@ -23,8 +23,8 @@ class ProductsController < ApplicationController
 
   def search
     if params[:search_key]
-      @products = Product.where("title LIKE ?","%#{params[:search_key]}%")
-      if @products
+      products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+      if products
         respond_to do |format|
           format.js {render partial: 'products/search'}
         end
@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
     @product = Product.new
     
 
-    @categories = Category.all.map { |c| [c.name, c.id] }
+    #@categories = Category.all.map { |c| [c.name, c.id] }
   end
 
   # GET /products/1/edit
@@ -71,9 +71,9 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
         format.xml { render xml: @product}
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+      # else
+      #   format.html { render :edit }
+      #   format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -89,15 +89,15 @@ class ProductsController < ApplicationController
     end
   end
 
-  def who_bought
-    @product = Product.find(params[:id])
-    @latest_order = @product.orders.order(:updated_at).last
-    if stale?(@latest_order)
-      respond_to do |format|
-        format.atom
-      end
-    end
-  end
+  # def who_bought
+  #   @product = Product.find(params[:id])
+  #   @latest_order = @product.orders.order(:updated_at).last
+  #   if stale?(@latest_order)
+  #     respond_to do |format|
+  #       format.atom
+  #     end
+  #   end
+  # end
 
   private
 

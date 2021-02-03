@@ -27,6 +27,7 @@ gem 'pry', '~> 0.13.1'
 gem 'hirb'
 gem 'simple_form'
 gem 'ratyrate'
+gem 'assert_difference'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
@@ -54,6 +55,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+gem 'simplecov', require: false, group: :test
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
