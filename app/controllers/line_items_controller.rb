@@ -30,7 +30,6 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
 
-    # @line_item = LineItem.new(line_item_params)
     @line_item = @cart.add_product(product)
     @cart.user_id = current_user.id
     @cart.save

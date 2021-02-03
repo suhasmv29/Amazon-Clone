@@ -12,8 +12,4 @@ class User < ApplicationRecord
     SendEmailJob.perform_later(self)
   end
   
-  # def after_confirmation
-  #   # WelcomeMailer.send_welcome_email(self).deliver
-  #   AfterConfirmationJob.perform_later(self)
-  # end
 end

@@ -89,10 +89,6 @@ class OrdersController < ApplicationController
   def ensure_cart_isnt_empty
     redirect_to store_index_url, notice: 'Your cart is empty' if @cart.line_items.empty?
   end
-  # def check
-  #   if current_user.present?
-  #     @order = Order.where(user_id: current_user.id)
-  #   end
-  # end
+
 
 end
