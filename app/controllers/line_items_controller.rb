@@ -38,6 +38,7 @@ class LineItemsController < ApplicationController
         format.html { redirect_to root_path, notice: 'Line item was successfully created.' }
         format.js {@current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
+        
       end
     end
   end

@@ -7,11 +7,14 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:password) }
     it { is_expected.to have_one(:cart) }
   end
+
+
+ 
   
   describe '#welcome_send' do
+    
     context 'Sending the job' do
       let!(:user) { create(:user) }
-
       # Checking job class name 
       it "Checking job class name " do
         expect{
@@ -29,6 +32,8 @@ RSpec.describe User, type: :model do
         expect(SendEmailJob).to have_been_enqueued.exactly(:once)
       end
     end
+    
+    
   end
 end
 

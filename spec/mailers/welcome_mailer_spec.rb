@@ -13,8 +13,10 @@ RSpec.describe WelcomeMailer, type: :mailer do
       expect(mail.to).to eq([user.email])
     end
     it 'Checking the from: ' do
+      expect(WelcomeMailer.deliveries.count).to eq 1
       expect(mail.from).to eq(["suhasmv29@gmail.com"])
     end
+
 
   end
 end
