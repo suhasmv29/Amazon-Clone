@@ -162,14 +162,14 @@ RSpec.describe "/products", type: :request do
       before do
         search_key != nil # Factory Bot user
       end
-    it "finds a searched project by name" do
-      controller.params[:search_key] = 'a'
-      Product.create! FactoryBot.build(:product, title: "arpit").attributes
-      products = Product.where("title LIKE ?","%#{params[:search_key]}%")
-      get search_url(:search_key)
-      expect(response).to be_successful
-      expect(products).to eq(products.last)  
-    end
+      it "finds a searched project by name" do
+        controller.params[:search_key] = 'a'
+        Product.create! FactoryBot.build(:product, title: "arpit").attributes
+        products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+        get search_url(:search_key)
+        expect(response).to be_successful
+        expect(products).to eq(products.last)  
+      end
   end
   
 end
