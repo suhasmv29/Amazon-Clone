@@ -2,11 +2,10 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  # subject { User.create }
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:password) }
 
-  # it 'sends an email' do
-  #   expect { subject.welcome_send(User.first) }
-  #     .to change { ActionMailer::Base.deliveries.count }.by(1)
+  it { is_expected.to have_one(:cart) }
 
-  # end
+ 
 end

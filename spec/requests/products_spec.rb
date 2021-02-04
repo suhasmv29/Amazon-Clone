@@ -16,15 +16,16 @@ RSpec.describe "/products", type: :request do
   # Product. As you add validations to Product, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryBot.build(:product).attributes
   }
+ 
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryBot.build(:product, title: nil).attributes  
   }
 
   describe "GET /index" do
-    it "renders a successful response" do
+    it "Product page has been loaded successfully" do
       Product.create! valid_attributes
       get products_url
       expect(response).to be_successful
@@ -32,17 +33,45 @@ RSpec.describe "/products", type: :request do
   end
 
   describe "GET /show" do
-    it "renders a successful response" do
-      product = Product.create! valid_attributes
-      get product_url(product)
-      expect(response).to be_successful
+    context 'When seller has signed in' do
+      let!(:seller) { create(:seller) }
+      let!(:user) { create(:user) }
+
+      before do
+        sign_in(user) # Factory Bot user
+      end
+      it "Opens products page" do
+        product = Product.create! valid_attributes
+        get product_url(product)
+        expect(response).to be_successful
+      end
     end
+    context 'When user has not signed in ' do
+      it "Url Not found" do
+        product = Product.create! valid_attributes
+        get product_url(product)
+        expect(response).not_to have_http_status(302)
+      end
+    end
+
   end
 
   describe "GET /new" do
-    it "renders a successful response" do
-      get new_product_url
-      expect(response).to be_successful
+    context 'When seller has signed in' do
+      let!(:seller) { create(:seller) }
+      before do
+        sign_in(seller) # Factory Bot user
+      end
+      it "Created a new product" do
+        get new_product_url
+        expect(response).to be_successful
+      end
+    end
+    context 'When user has not signed in ' do
+      it "Page cannot be opened" do
+        get new_product_url
+        expect(response).not_to be_successful
+      end
     end
   end
 
@@ -50,12 +79,13 @@ RSpec.describe "/products", type: :request do
     it "render a successful response" do
       product = Product.create! valid_attributes
       get edit_product_url(product)
-      expect(response).to be_successful
+      expect(response).to have_http_status(:found)
     end
   end
 
   describe "POST /create" do
     context "with valid parameters" do
+
       it "creates a new Product" do
         expect {
           post products_url, params: { product: valid_attributes }
@@ -75,44 +105,44 @@ RSpec.describe "/products", type: :request do
         }.to change(Product, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "redirects to new product page" do
         post products_url, params: { product: invalid_attributes }
         expect(response).to be_successful
+        expect(response).to render_template(:new)
       end
     end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
+      
+      let!(:seller) { create(:seller) }
+      before do
+        sign_in(seller) # Factory Bot user
+      end
       it "updates the requested product" do
         product = Product.create! valid_attributes
-        patch product_url(product), params: { product: new_attributes }
+        patch product_url(product), params: { product: valid_attributes }
         product.reload
-        skip("Add assertions for updated state")
+        expect(response).to have_http_status(302)
       end
 
       it "redirects to the product" do
         product = Product.create! valid_attributes
-        patch product_url(product), params: { product: new_attributes }
+        patch product_url(product), params: { product: valid_attributes }
         product.reload
+        expect(response).to have_http_status(302)
         expect(response).to redirect_to(product_url(product))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        product = Product.create! valid_attributes
-        patch product_url(product), params: { product: invalid_attributes }
-        expect(response).to be_successful
+      
       end
     end
   end
 
   describe "DELETE /destroy" do
+    let!(:seller) { create(:seller) }
+      before do
+        sign_in(seller) # Factory Bot user
+      end
     it "destroys the requested product" do
       product = Product.create! valid_attributes
       expect {
@@ -123,7 +153,23 @@ RSpec.describe "/products", type: :request do
     it "redirects to the products list" do
       product = Product.create! valid_attributes
       delete product_url(product)
-      expect(response).to redirect_to(products_url)
+      expect(response).to redirect_to(products_path)
     end
   end
+
+  describe "GET /search" do
+    let!(:search_key) { "a" }
+      before do
+        search_key != nil # Factory Bot user
+      end
+      it "finds a searched project by name" do
+        controller.params[:search_key] = 'a'
+        Product.create! FactoryBot.build(:product, title: "arpit").attributes
+        products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+        get search_url(:search_key)
+        expect(response).to be_successful
+        expect(products).to eq(products.last)  
+      end
+  end
+  
 end

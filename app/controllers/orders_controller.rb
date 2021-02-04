@@ -17,8 +17,7 @@ class OrdersController < ApplicationController
   def show
     @order = Order.where(user_id: current_user.id)
     @cart = Cart.where(user_id: current_user.id).first
-    # @cart = Cart.find(user_id: current_user.id)
-    # @line = LineItem.where(cart_id: @cart.ids)
+
 
   end
 
@@ -40,6 +39,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        OrderMailer.new_order_email(@order).deliver
+
         @cart = session[:cart_id]
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil

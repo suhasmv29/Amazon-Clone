@@ -16,11 +16,11 @@ RSpec.describe "/carts", type: :request do
   # Cart. As you add validations to Cart, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryBot.build(:cart).attributes
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryBot.build(:cart).attributes 
   }
 
   describe "GET /index" do

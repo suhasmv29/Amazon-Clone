@@ -3,26 +3,24 @@ class ProductsController < ApplicationController
   before_action :authenticate_seller!, only: %i[new edit destroy update]
 
 
-  # GET /products
-  # GET /products.json
+
   def index
     @products = Product.all
+   
   end
 
-  # GET /products/1
-  # GET /products/1.json
+  
   def show
     if current_user.present?
-      @order = Order.where(user_id: current_user.id)
-      
+      @order = Order.where(user_id: current_user.id)   
     end
 
   end
 
   def search
     if params[:search_key]
-      @products = Product.where("title LIKE ?","%#{params[:search_key]}%")
-      if @products
+      products = Product.where("title LIKE ?","%#{params[:search_key]}%")
+      if products
         respond_to do |format|
           format.js {render partial: 'products/search'}
         end
@@ -30,11 +28,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  # GET /products/new
+ 
   def new
     @product = Product.new
-
-    @categories = Category.all.map { |c| [c.name, c.id] }
   end
 
   # GET /products/1/edit
@@ -45,11 +41,14 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.category_id = 1
-
+    
+   
+    
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
+        format.xml { render xml: @product}
       else
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -64,9 +63,7 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        format.xml { render xml: @product}
       end
     end
   end
@@ -78,18 +75,11 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
+      format.xml { render xml: @product}
     end
   end
 
-  def who_bought
-    @product = Product.find(params[:id])
-    @latest_order = @product.orders.order(:updated_at).last
-    if stale?(@latest_order)
-      respond_to do |format|
-        format.atom
-      end
-    end
-  end
+
 
   private
 

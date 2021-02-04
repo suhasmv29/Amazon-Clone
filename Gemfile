@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.0'
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
@@ -27,6 +27,7 @@ gem 'pry', '~> 0.13.1'
 gem 'hirb'
 gem 'simple_form'
 gem 'ratyrate'
+gem 'assert_difference'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
@@ -43,6 +44,7 @@ group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0.2'
   
+  
 end
 
 group :development do
@@ -53,6 +55,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+gem 'simplecov', require: false, group: :test
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
@@ -68,3 +72,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "sidekiq", "~> 6.1"
+
+gem "sidekiq-cron", "~> 1.2"
