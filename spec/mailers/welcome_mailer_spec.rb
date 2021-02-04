@@ -1,21 +1,22 @@
 require "rails_helper"
 
 RSpec.describe WelcomeMailer, type: :mailer do
-  describe "notify" do
-    before do
-      sign_in(create(:user))
-    end
+  describe "#welcome_send" do
+    let!(:user) { create(:user) }
         
-    let(:mail) { WelcomeMailer.signup }
+    let(:mail) { WelcomeMailer.welcome_send(user)}
 
-    it "renders the headers" do
-      expect(mail.subject).to eq("Signup")
-      expect(mail.to).to eq(["to@example.org"])
+    it "Checking the subject" do
+      expect(mail.subject).to eq("Welcome to my site")
+    end
+    it 'Checking the mail to:' do
+      expect(mail.to).to eq([user.email])
+    end
+    it 'Checking the from: ' do
+      expect(WelcomeMailer.deliveries.count).to eq 1
       expect(mail.from).to eq(["suhasmv29@gmail.com"])
     end
 
-    it "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
-    end
+
   end
 end

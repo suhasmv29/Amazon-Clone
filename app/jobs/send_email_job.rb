@@ -8,3 +8,4 @@ class SendEmailJob < ApplicationJob
     WelcomeMailer.welcome_send(@user).deliver_later(wait: 2.minute)
   end
 end
+

@@ -30,20 +30,15 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
 
-    # @line_item = LineItem.new(line_item_params)
     @line_item = @cart.add_product(product)
     @cart.user_id = current_user.id
     @cart.save
     respond_to do |format|
       if @line_item.save
-        binding.pry
-
         format.html { redirect_to root_path, notice: 'Line item was successfully created.' }
         format.js {@current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
-      else
-        format.html { render :new }
-        format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        
       end
     end
   end
@@ -55,9 +50,6 @@ class LineItemsController < ApplicationController
       if @line_item.update(line_item_params)
         format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
         format.json { render :show, status: :ok, location: @line_item }
-      else
-        format.html { render :edit }
-        format.json { render json: @line_item.errors, status: :unprocessable_entity }
       end
     end
   end

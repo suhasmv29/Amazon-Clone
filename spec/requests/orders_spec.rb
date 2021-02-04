@@ -13,117 +13,263 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/orders", type: :request do
-  # Order. As you add validations to Order, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
 
   describe "GET /index" do
-    it "renders a successful response" do
-      Order.create! valid_attributes
-      get orders_url
-      expect(response).to be_successful
+    let!(:user) { create(:user) }
+    context 'When user has signed in' do
+      before do
+        sign_in(user)
+      end
+      it "renders a successful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get orders_url
+        expect(response).to be_successful
+      end
     end
+    context 'When user has not signed in' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get orders_url
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path) 
+      end
+    end 
   end
 
   describe "GET /show" do
-    it "renders a successful response" do
-      order = Order.create! valid_attributes
-      get order_url(order)
-      expect(response).to be_successful
+    let!(:user) { create(:user) }
+
+    context 'when user has signed' do
+      before do
+        sign_in(user)
+      end
+      it "renders a successful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get order_url(order)
+        expect(response).to be_successful
+      end
     end
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get order_url(order)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)       end
+    end
+
   end
 
   describe "GET /new" do
-    it "renders a successful response" do
-      get new_order_url
-      expect(response).to be_successful
+    let!(:user) { create(:user) }
+
+    context 'User must signed in' do
+      before do
+        sign_in(user)
+      end
+
+      it "renders a successful response" do
+
+        get new_order_url
+        expect(response).to redirect_to(store_index_path)
+        expect(flash[:notice]).to match(/Your cart is empty*/)
+      end
+      it "should get new" do
+        category = create(:category)
+        product = create(:product, category_id: category.id)
+        post line_items_url, params: { product_id: product.id }
+        get new_order_url
+        assert_response :success
+      end
     end
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get new_order_url
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(store_index_url)
+      end
+    end
+    
   end
 
   describe "GET /edit" do
-    it "render a successful response" do
-      order = Order.create! valid_attributes
-      get edit_order_url(order)
-      expect(response).to be_successful
+    let!(:user) { create(:user) }
+
+
+    context 'User signed in' do
+      before do
+        sign_in(user)
+      end
+      it "render a successful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get edit_order_url(order)
+        expect(response).to be_successful
+      end
+    end
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        get edit_order_url(order)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 
   describe "POST /create" do
+    let!(:user) { create(:user) }
+
     context "with valid parameters" do
+      before do
+        sign_in(user) 
+      end
       it "creates a new Order" do
         expect {
-          post orders_url, params: { order: valid_attributes }
+          order = build(:order, user_id: user.id, email: user.email)
+
+          post orders_url, params: { order: { address: order.address,
+            email: order.email, name: order.name,
+            pay_type: order.pay_type } }
         }.to change(Order, :count).by(1)
       end
-
       it "redirects to the created order" do
-        post orders_url, params: { order: valid_attributes }
-        expect(response).to redirect_to(order_url(Order.last))
+        order = build(:order, user_id: user.id, email: user.email)
+
+        post orders_url, params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
+        expect(response).to redirect_to(new_charge_path)
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new Order" do
+      before do
+        sign_in(user) 
+      end
+      it "does not create a new order" do
         expect {
-          post orders_url, params: { order: invalid_attributes }
+          order = build(:order, user_id: user.id, email: user.email)
+
+          post orders_url, params: { order: { address: order.address,
+            email: order.email, name: order.name } }
         }.to change(Order, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post orders_url, params: { order: invalid_attributes }
+      it "renders new page" do
+        order = build(:order, user_id: user.id, email: user.email)
+
+        post orders_url, params: { order: { address: order.address,
+          email: order.email, name: order.name } }
         expect(response).to be_successful
+        expect(response).to render_template(:new)
+      end
+
+    end
+
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        post orders_url, params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
   describe "PATCH /update" do
+    let!(:user) { create(:user) }
+
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      before do
+        sign_in(user) 
+      end
+
 
       it "updates the requested order" do
-        order = Order.create! valid_attributes
-        patch order_url(order), params: { order: new_attributes }
+        order = create(:order, user_id: user.id, email: user.email)
+        patch order_url(order),params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
         order.reload
-        skip("Add assertions for updated state")
       end
 
       it "redirects to the order" do
-        order = Order.create! valid_attributes
-        patch order_url(order), params: { order: new_attributes }
+        order = create(:order, user_id: user.id, email: user.email)
+        patch order_url(order), params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
         order.reload
         expect(response).to redirect_to(order_url(order))
       end
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        order = Order.create! valid_attributes
-        patch order_url(order), params: { order: invalid_attributes }
+      before do
+        sign_in(user)
+
+      end
+      it "renders edit page" do
+        order = create(:order, user_id: user.id, email: user.email)
+        order.address = ''
+        patch order_url(order),params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
         expect(response).to be_successful
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        post orders_url, params: { order: { address: order.address,
+          email: order.email, name: order.name,
+          pay_type: order.pay_type } }
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested order" do
-      order = Order.create! valid_attributes
-      expect {
+    let!(:user) { create(:user) }
+
+    context 'when user has signed in' do
+      before do
+        sign_in(user)
+      end
+
+      it "destroys the requested order" do
+        order = create(:order, user_id: user.id, email: user.email)
+        expect {
+          delete order_url(order)
+        }.to change(Order, :count).by(-1)
+      end
+  
+      it "redirects to the orders list" do
+        order = create(:order, user_id: user.id, email: user.email)
         delete order_url(order)
-      }.to change(Order, :count).by(-1)
+        expect(response).to redirect_to(orders_url)
+      end
     end
 
-    it "redirects to the orders list" do
-      order = Order.create! valid_attributes
-      delete order_url(order)
-      expect(response).to redirect_to(orders_url)
+    context 'when user has not signed' do
+      it "renders a unsuccessful response" do
+        order = create(:order, user_id: user.id, email: user.email)
+        delete order_url(order)
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
+    
   end
 end
