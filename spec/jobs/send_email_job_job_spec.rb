@@ -13,10 +13,6 @@ RSpec.describe SendEmailJob, type: :job do
   it 'is in default queue' do
     expect(described_class.new.queue_name).to eq('default')
   end
-  it 'executes perform' do
-    perform_enqueued_jobs { job }
-    expect(User.count).to eq 1
-  end
 
   it 'Send the mail' do
     expect do
